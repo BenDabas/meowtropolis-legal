@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Meowtropolis Privacy Policy</title>
+<meta name="description" content="What Meowtropolis collects, what it does not, and how to have it deleted.">
+<style>
+  :root {
+    color-scheme: light dark;
+    --bg: #f6f5f2;
+    --panel: #ffffff;
+    --ink: #1c1b19;
+    --ink-soft: #55524d;
+    --line: #e2ded6;
+    --accent: #b4531c;
+    --accent-soft: #fdf1e7;
+    --good-bg: #eef6ee;
+    --good-line: #cfe3cf;
+    --good-ink: #24541f;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #14130f;
+      --panel: #1c1b17;
+      --ink: #efece4;
+      --ink-soft: #b3ada1;
+      --line: #302d27;
+      --accent: #f0954f;
+      --accent-soft: #2a1f15;
+      --good-bg: #17231a;
+      --good-line: #2c4630;
+      --good-ink: #a8d5a5;
+    }
+  }
+
+  * { box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    padding: 0 20px 96px;
+    background: var(--bg);
+    color: var(--ink);
+    font: 17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+
+  .wrap { max-width: 720px; margin: 0 auto; }
+
+  header {
+    padding: 56px 0 28px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 36px;
+  }
+
+  .kicker {
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 700;
+    margin: 0 0 10px;
+  }
+
+  h1 {
+    font-size: clamp(30px, 6vw, 42px);
+    line-height: 1.15;
+    margin: 0 0 14px;
+    letter-spacing: -0.02em;
+  }
+
+  .dateline {
+    margin: 0;
+    color: var(--ink-soft);
+    font-size: 15px;
+  }
+
+  .placeholder {
+    display: inline-block;
+    background: var(--accent-soft);
+    border: 1px dashed var(--accent);
+    color: var(--accent);
+    border-radius: 6px;
+    padding: 1px 8px;
+    font-weight: 700;
+    font-size: 14px;
+  }
+
+  h2 {
+    font-size: 23px;
+    letter-spacing: -0.01em;
+    margin: 44px 0 12px;
+    padding-top: 6px;
+  }
+
+  h3 {
+    font-size: 18px;
+    margin: 26px 0 8px;
+  }
+
+  p { margin: 0 0 14px; }
+
+  ul { margin: 0 0 16px; padding-left: 22px; }
+
+  li { margin-bottom: 7px; }
+
+  strong { font-weight: 700; }
+
+  a { color: var(--accent); }
+
+  .summary {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--accent);
+    border-radius: 10px;
+    padding: 22px 24px 8px;
+    margin: 0 0 8px;
+  }
+
+  .summary h2 { margin-top: 0; font-size: 20px; }
+
+  .never {
+    background: var(--good-bg);
+    border: 1px solid var(--good-line);
+    border-radius: 10px;
+    padding: 20px 24px 6px;
+  }
+
+  .never h2 { margin-top: 0; color: var(--good-ink); }
+
+  .never ul { list-style: none; padding-left: 0; }
+
+  .never li { padding-left: 26px; position: relative; }
+
+  .never li::before {
+    content: "\2715";
+    position: absolute;
+    left: 4px;
+    top: 0;
+    color: var(--good-ink);
+    font-weight: 700;
+  }
+
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 18px 22px 6px;
+    margin: 0 0 18px;
+  }
+
+  .card h3 { margin-top: 0; }
+
+  .table-scroll { overflow-x: auto; margin: 0 0 18px; }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 460px;
+    font-size: 15.5px;
+  }
+
+  th, td {
+    text-align: left;
+    vertical-align: top;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  th {
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .note {
+    color: var(--ink-soft);
+    font-size: 15px;
+  }
+
+  .contact {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 20px 24px 8px;
+    margin-top: 8px;
+  }
+
+  footer {
+    margin-top: 48px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+    color: var(--ink-soft);
+    font-size: 14px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <p class="kicker">Meowtropolis</p>
+  <h1>Privacy Policy</h1>
+  <p class="dateline">In effect from 2 September 2026</p>
+</header>
+
+<div class="summary">
+  <h2>The short version</h2>
+  <ul>
+    <li>You never make an account, and the game never asks for your name, your email or your phone number.</li>
+    <li>The game gives your save file a <strong>random number</strong> when you first open it. That number is how the leaderboard tells one player from another. It is not your phone, and it is not you.</li>
+    <li>You get a <strong>cat name</strong> such as SleepyBiscuit. You can change it. Other players can see it, so please do not put your real name in it.</li>
+    <li>When you finish a match, the game sends the <strong>result</strong> of that match so it can appear on the leaderboard and so other people can play against a recording of your run.</li>
+    <li>There are <strong>no ads</strong> and <strong>no advertising companies</strong> in this game. Nothing you do here is sold, shared for marketing, or used to follow you around other apps.</li>
+    <li>If you delete the game, the random number on your phone is gone with it. If you also want your rows removed from the leaderboard, write to us and we will delete them.</li>
+  </ul>
+</div>
+
+<h2>Who wrote this</h2>
+<p>
+  Meowtropolis is made by one person, Ben Dabas. The whole game, the leaderboard and the small
+  server behind it are his. There is no company, no marketing team, and nobody else with access.
+  You can always reach him at
+  <a href="mailto:bendabas1@gmail.com">bendabas1@gmail.com</a>.
+</p>
+
+<div class="never">
+  <h2>What Meowtropolis never collects</h2>
+  <p>This is not a promise about how we behave. These things simply are not in the game &mdash; there is no code anywhere that asks for them.</p>
+  <ul>
+    <li><strong>No name, email address or phone number.</strong> There is no sign-up form and no login screen.</li>
+    <li><strong>No advertising ID and no device ID.</strong> Nothing identifies your phone or lets anyone follow you into another app.</li>
+    <li><strong>No location.</strong> The game never asks where you are and never receives it.</li>
+    <li><strong>No contacts, photos, camera, microphone or files.</strong></li>
+    <li><strong>No ads, and no advertising or tracking companies at all.</strong> There is no ad network, no attribution service and no outside analytics service in the game.</li>
+    <li><strong>No chat and no messages.</strong> Players cannot send each other text of any kind.</li>
+    <li><strong>No card numbers or payment details.</strong> If you buy coins, Google handles the payment. The game never sees the card.</li>
+    <li><strong>No age or date of birth.</strong> The game never asks.</li>
+  </ul>
+</div>
+
+<h2>Who you are, inside the game</h2>
+
+<h3>Your player number</h3>
+<p>
+  The first time you open Meowtropolis, the game writes a long random number into its save file on
+  your phone. Every match result the game sends carries that number, so the leaderboard knows that
+  today's run and last week's run belong to the same player.
+</p>
+<p>
+  It is a fresh random number, not anything taken from your phone. Nobody can work backwards from it
+  to a person, a device or an account. Deleting the game deletes the save file, and the link is
+  genuinely broken &mdash; a new install starts again as somebody new.
+</p>
+<p class="note">
+  One exception, and it is your choice: if you use the feature that links two of your own phones,
+  you type the same short code on both, and that code becomes the player number on both of them.
+</p>
+
+<h3>Your cat name</h3>
+<p>
+  The game gives you a two-word cat name from a fixed list of cat words &mdash; SleepyBiscuit,
+  GrumpyWaffle, and so on. You can roll a new one, or type your own instead.
+</p>
+<p>
+  <strong>Your name is public inside the game.</strong> It is printed next to your score on the
+  leaderboards, and it is shown to other players when they meet a recording of one of your runs.
+  Please treat it as something the world can read, and do not type your real name, your school, or
+  anything you would not want a stranger to see.
+</p>
+<p>
+  A typed name has to be 3 to 14 letters or digits, with no spaces or symbols, and it is checked
+  against a list of rude and hateful words on both the phone and the server. That check catches the
+  obvious ones. It cannot catch everything, so if you ever see a name that should not be there,
+  please tell us and it will be removed.
+</p>
+
+<h2>What the game sends when you play</h2>
+
+<h3>After a match</h3>
+<p>
+  When a match finishes, the game sends one small record of that match to our own server. It
+  contains:
+</p>
+<ul>
+  <li>your player number and your cat name;</li>
+  <li>which map you played and which cat you wore;</li>
+  <li>twenty-five numbers describing how big your cat grew during the match;</li>
+  <li>which skills you had equipped and how many times you used each one;</li>
+  <li>a few numbers describing how you played &mdash; how much you chased, how far you roamed, how
+      eagerly you used skills;</li>
+  <li>your rank badge, your total wins and your rating on that map.</li>
+</ul>
+<p>
+  Those last numbers exist for one reason: they let the game replay your run as an opponent for
+  somebody else. When you play the online mode, the cats around you are recordings of other people's
+  matches, played back. Yours becomes one of them.
+</p>
+
+<h3>The leaderboards</h3>
+<p>
+  From the same match, the server keeps your best result on that map &mdash; your name, your cat,
+  your score, your rating, your wins and your rank badge &mdash; so the leaderboard can be ordered.
+  After a 1&nbsp;v&nbsp;1 duel, the game also sends your duel rating, your wins, your losses and your
+  best winning streak, for the duel ladder.
+</p>
+<p>
+  When the game asks the server for a leaderboard, it sends your player number so that the server
+  can point at your own row and tell you your position. <strong>The server never sends anybody's
+  player number back to anybody.</strong> All you ever see about another player is the name, the cat
+  and the numbers on their row.
+</p>
+
+<h3>How the game is used</h3>
+<p>
+  Meowtropolis records what happens in the game itself, so it can be made better: which maps people
+  stop choosing, which skills nobody buys, where in the tutorial people give up. These records carry
+  your player number, and nothing else about you. There is no free text of any kind in them. They
+  are:
+</p>
+<div class="table-scroll">
+<table>
+  <thead>
+    <tr><th>When</th><th>What is recorded</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>You open the game</td><td>the version of the game, how many matches you have played, how many coins you have</td></tr>
+    <tr><td>A match starts</td><td>the map, the cat, the skills you equipped, and whether it is an online match or a bot match</td></tr>
+    <tr><td>A match ends</td><td>the map, the cat, the skills, your final size, your tier, your place, how many rivals, how many cats you ate, coins and stars earned, how many seconds it lasted, and how it ended</td></tr>
+    <tr><td>You quit mid&#8209;match</td><td>the map, the cat, your size and how many seconds in you left</td></tr>
+    <tr><td>You spend coins</td><td>what you bought (a cat, a skill, a skill level) and how many coins you had afterwards</td></tr>
+    <tr><td>You collect a reward</td><td>which daily gift, mission or achievement, and the coins it paid</td></tr>
+    <tr><td>Tutorial</td><td>which tutorial step you finished</td></tr>
+    <tr><td>You tap a reminder</td><td>which reminder it was</td></tr>
+  </tbody>
+</table>
+</div>
+<p class="note">
+  Times are recorded only to the nearest whole second, and nothing here records where you are, what
+  else is on your phone, or anything you typed.
+</p>
+
+<h2>Playing 1 v 1 against another person</h2>
+<p>
+  The 1&nbsp;v&nbsp;1 mode connects two phones through <strong>Unity</strong>, the company whose
+  software the game is built with. Unity provides the room where two players meet and the connection
+  their phones talk over. The connection is encrypted.
+</p>
+<p>
+  What the two phones actually tell each other is: which cat each player is wearing, which three
+  skills they have, their duel rating, where their cat is moving and what it has eaten. <strong>Your
+  name is deliberately not sent, and neither is your player number.</strong> The person you duel
+  never learns who you are.
+</p>
+<p>
+  Unity also gives every copy of the game an anonymous account when the game starts, so that its
+  services will answer. It is anonymous in the real sense: it holds nothing you typed, because you
+  never typed anything.
+</p>
+
+<h2>Signing in with Google Play Games</h2>
+<p>
+  On Android, the game quietly asks Google Play Games who you are when it starts. This exists so that
+  the things you own &mdash; especially coins you paid for &mdash; can survive a new phone instead of
+  living only on this one.
+</p>
+<p>
+  Google gives the game a short one-time code, which the game passes straight to Unity so Unity can
+  link its account to your Play Games account. <strong>The game itself never receives or stores your
+  Google name, your email address or your Google ID.</strong>
+</p>
+<p>
+  If you have no Play Games account, or you say no, or you are offline, nothing bad happens: the game
+  carries on exactly as before. The only thing you do not get is the ability to recover your progress
+  on a new phone.
+</p>
+
+<h2>Buying coins</h2>
+<p>
+  Coins can be earned by playing, and they can also be bought with real money. Buying is handled
+  entirely by <strong>Google Play</strong>. The game never sees your card, your billing address or any
+  payment detail &mdash; it only hears back from Google whether the purchase succeeded.
+</p>
+<p>
+  The receipt Google returns (the order number and purchase token) is stored <strong>only on your own
+  phone</strong>, so the coins can be given to you exactly once even if the app closes at the wrong
+  moment. It is not uploaded anywhere.
+</p>
+<p>
+  So that a purchase can be recognised as yours if you change phone, the game gives Google a
+  scrambled, one-way version of your player number. It cannot be turned back into anything.
+</p>
+<p>
+  The only thing that leaves your phone about a purchase is one line in the usage records above:
+  which coin pack, how many coins, and your new balance. No price, no receipt, no payment details.
+</p>
+
+<h2>What stays on your phone and never leaves</h2>
+<ul>
+  <li>Your progress: coins, the cats and skills you own, your records, your rank, your settings.</li>
+  <li>Your purchase receipts.</li>
+  <li>Reminders. If you allow notifications, they are scheduled by your phone itself &mdash; nothing
+      is sent to us or to anyone else in order to send them.</li>
+</ul>
+<p>All of it is deleted when you uninstall the game.</p>
+
+<h2>Where the data is stored, and who can read it</h2>
+<p>
+  Match results, leaderboard rows, names and usage records are stored in a small Google Firebase
+  database in <strong>Europe (Belgium)</strong>, reached through a program written for this game
+  alone.
+</p>
+<ul>
+  <li><strong>Only Ben can read it</strong>, through his own Google account. No other app and no other
+      person has access to the database, and the game itself has no key to it.</li>
+  <li>The usage records cannot be read over the internet at all. There is deliberately no way to
+      request them; that ability was never built.</li>
+  <li>Leaderboard rows are meant to be seen: names, cats and scores are shown to other players inside
+      the game. Player numbers are never shown to anyone.</li>
+  <li>Nothing is sold. Nothing is given to advertisers, data brokers or anybody else.</li>
+</ul>
+<p>
+  Two other companies are unavoidably involved, each under their own privacy policy: <strong>Google</strong>
+  (which hosts the database, runs Play Games sign-in and takes the payments) and <strong>Unity</strong>
+  (which provides the anonymous account and the 1&nbsp;v&nbsp;1 connection). You can read
+  <a href="https://policies.google.com/privacy">Google's privacy policy</a> and
+  <a href="https://unity.com/legal/game-player-and-app-user-privacy-policy">Unity's player privacy policy</a>.
+  As with any internet connection, their systems see your device's internet address when your phone
+  talks to them; the game itself does not record or keep it.
+</p>
+
+<h2>How long it is kept</h2>
+<p>
+  Being honest about this: <strong>the game has no automatic deletion schedule.</strong> Nothing is
+  set up to erase data after a certain number of days. What actually happens is:
+</p>
+<ul>
+  <li>Only your <strong>five most recent match recordings</strong> are kept. A sixth match overwrites
+      the oldest one.</li>
+  <li>Your leaderboard row and your duel row are single rows that are rewritten each time you play,
+      not a history.</li>
+  <li>The usage records build up, and stay until they are deleted by hand.</li>
+</ul>
+<p>
+  So: your data stays until you ask for it to be deleted, or until it is cleared out. If that changes,
+  this page will say so.
+</p>
+
+<h2>Children</h2>
+<p>
+  Meowtropolis is a cat game and children play it. It was built with that in mind:
+</p>
+<ul>
+  <li><strong>There is no chat.</strong> Players cannot send each other any text, ever.</li>
+  <li><strong>There is no way to be contacted.</strong> Players cannot find or message each other
+      outside a match.</li>
+  <li><strong>Nothing personal is asked for.</strong> No name, no age, no email, no location.</li>
+  <li>Names are filtered for rude and hateful words before they can appear on anybody else's screen.</li>
+</ul>
+<p>
+  The one thing parents should know is that the game <strong>sells coins for real money</strong>,
+  between roughly one and twenty US dollars. Please use your phone's or Google Play's parental
+  controls and password protection if a child plays on your device.
+</p>
+<p>
+  The game does not ask anyone's age, so we cannot tell who is a child. If you are a parent and you
+  want everything connected to your child's game removed, write to us and we will delete it. See
+  below.
+</p>
+
+<h2>How to have your data deleted</h2>
+<p>
+  Write to <a href="mailto:bendabas1@gmail.com">bendabas1@gmail.com</a> with your cat name &mdash;
+  the name shown on your profile screen in the game &mdash; and say you want your data deleted.
+</p>
+<p>
+  Your name is what lets us find your rows, so please copy it exactly. We will delete your
+  leaderboard rows, your duel row, your stored match recordings, your claimed name and your usage
+  records. It will normally be done within 30 days, and you will get a reply saying it is done.
+</p>
+<p>
+  You can also delete everything on your side at any time by uninstalling the game, which removes the
+  save file, your progress and the random player number on your phone. That does not remove rows
+  already on the leaderboard &mdash; for those, write to us.
+</p>
+<p class="note">
+  Google and Unity hold their own records under their own policies; requests about those go to them.
+  For anything you bought, Google Play holds the purchase history.
+</p>
+
+<h2>Changes to this policy</h2>
+<p>
+  If the game starts collecting something new, this page will be updated before that version is
+  released, and the date at the top will change. This page is the current version at all times.
+</p>
+<p>
+  That includes advertising. Everything on this page about ads describes Meowtropolis as it is
+  today: there is no ad network in the game and no advertising company receives anything. If that
+  ever changes, it will not change quietly &mdash; this page will say so before the version
+  containing ads is released, the date at the top will change, and what Google Play shows you about
+  this game's data will change with it.
+</p>
+
+<div class="contact">
+  <h2 style="margin-top:0">Contact</h2>
+  <p>
+    Questions, deletion requests, or anything on this page you think is wrong:<br>
+    <a href="mailto:bendabas1@gmail.com">bendabas1@gmail.com</a>
+  </p>
+</div>
+
+<footer>
+  Meowtropolis &mdash; privacy policy. Written to describe what the game actually does, not what is
+  usual to say.
+</footer>
+
+</div>
+</body>
+</html>
