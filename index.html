@@ -411,6 +411,11 @@
   <li>So that a code on its own (or a link) can find you, our server keeps one record matching your
       friend code to your Unity account number. Looking a code up needs the game, and each copy of the
       game can only look up a limited number of codes an hour, so codes cannot be guessed in bulk.</li>
+  <li><strong>When you send someone a friend request, they see your cat name, your cat and your
+      level</strong> on it, so they know who is asking. For that, our server keeps a small &ldquo;player
+      card&rdquo; with just those three things. Only your friends and players you have sent a request to
+      can read it &mdash; our server asks Unity who they are each time &mdash; and nobody else can look it
+      up. Your friends' phones may also use it to show your name while you are offline.</li>
 </ul>
 
 <h3>What your friends see</h3>
@@ -509,7 +514,9 @@
   <li>Your progress: coins, the cats and skills you own, your records, your rank, your settings.</li>
   <li>Your purchase receipts.</li>
   <li>Your &ldquo;played with you&rdquo; list, the friend requests you have sent, and the names of your
-      friends that your phone remembers so a friend alert can say who is online.</li>
+      friends that your phone remembers so a friend alert can say who is online. Your phone also keeps a
+      copy of the player cards (cat name, cat, level) of your friends and of the players who sent you a
+      request.</li>
   <li>Reminders. If you allow notifications, the daily reminders are scheduled by your phone itself
       &mdash; nothing is sent to us or to anyone else in order to send them. (Friend alerts are
       different; they are explained <a href="#alerts">above</a>.)</li>
@@ -561,6 +568,9 @@
       of when each pair of friends was last alerted, and of when a player last opened the game, are
       deleted automatically after one day. Your friend-code record stays until you delete your
       account.</li>
+  <li>Your player card (cat name, cat, level) is refreshed each time you open the game and
+      <strong>deleted automatically when the game has not been open for 30 days</strong>, or when you
+      delete your account.</li>
   <li>Your friends list stays with Unity until you remove a friend or delete your account. How long
       Unity keeps its own records beyond that is set by Unity.</li>
   <li><strong>When you delete your account</strong>, all of the above is deleted 7 days after you
