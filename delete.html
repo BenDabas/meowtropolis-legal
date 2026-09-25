@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<title>Delete your Meowtropolis account</title>
+<meta name="description" content="How to delete your Meowtropolis account and its data, in the game or from this page.">
+<style>
+  :root {
+    color-scheme: light dark;
+    --bg: #f6f5f2;
+    --panel: #ffffff;
+    --ink: #1c1b19;
+    --ink-soft: #55524d;
+    --line: #e2ded6;
+    --accent: #b4531c;
+    --accent-soft: #fdf1e7;
+    --danger: #b3261e;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #14130f;
+      --panel: #1c1b17;
+      --ink: #efece4;
+      --ink-soft: #b3ada1;
+      --line: #302d27;
+      --accent: #f0954f;
+      --accent-soft: #2a1f15;
+      --danger: #ff8a80;
+    }
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    padding: 0 16px 96px;
+    background: var(--bg);
+    color: var(--ink);
+    font: 17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+
+  .wrap { max-width: 720px; margin: 0 auto; }
+
+  header { padding: 56px 0 28px; border-bottom: 1px solid var(--line); margin-bottom: 32px; }
+
+  .kicker {
+    font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent); font-weight: 700; margin: 0 0 10px;
+  }
+
+  h1 { font-size: clamp(28px, 6vw, 40px); line-height: 1.15; margin: 0 0 14px; letter-spacing: -0.02em; }
+  h2 { font-size: 23px; letter-spacing: -0.01em; margin: 40px 0 12px; }
+  p { margin: 0 0 14px; }
+  ul, ol { margin: 0 0 16px; padding-left: 22px; }
+  li { margin-bottom: 7px; }
+  a { color: var(--accent); }
+  .dateline { margin: 0; color: var(--ink-soft); font-size: 15px; }
+  .note { color: var(--ink-soft); font-size: 15px; }
+
+  .card {
+    background: var(--panel); border: 1px solid var(--line); border-left: 4px solid var(--accent);
+    border-radius: 10px; padding: 20px 22px 8px; margin: 0 0 18px;
+  }
+  .card h2 { margin-top: 0; font-size: 20px; }
+
+  form { display: grid; gap: 14px; margin: 8px 0 18px; }
+  label { display: grid; gap: 4px; font-weight: 600; }
+  label span { font-weight: 400; color: var(--ink-soft); font-size: 15px; }
+  input {
+    font: inherit; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--line);
+    background: var(--bg); color: var(--ink); width: 100%;
+  }
+  button {
+    font: inherit; font-weight: 700; padding: 12px 18px; border-radius: 8px; border: 0;
+    background: var(--danger); color: #fff; cursor: pointer; justify-self: start;
+  }
+
+  footer { margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--line); color: var(--ink-soft); font-size: 14px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <p class="kicker">Meowtropolis &middot; by Ben Dabas</p>
+  <h1>Delete your account</h1>
+  <p class="dateline">How to delete your Meowtropolis account and everything our servers hold about it.</p>
+</header>
+
+<div class="card">
+  <h2>If you still have the game</h2>
+  <ol>
+    <li>Open Meowtropolis and tap <strong>Settings</strong> (the gear on the home screen).</li>
+    <li>In the <strong>YOUR ACCOUNT</strong> column, tap <strong>DELETE ACCOUNT</strong>.</li>
+    <li>Read what will be deleted, then <strong>hold</strong> the red button until it fills.</li>
+  </ol>
+  <p>
+    Your account is then deleted after <strong>7 days</strong>. Until then the game shows a notice every
+    time you open it, with a button to keep your account, in case you change your mind or somebody
+    else pressed it. If you want it gone at once, the same notice has <strong>DELETE NOW</strong>.
+  </p>
+</div>
+
+<h2>If you no longer have the game</h2>
+<p>
+  Fill in this form. We need <strong>both</strong> of these, exactly as the game showed them, to find
+  your account:
+</p>
+<ul>
+  <li>your <strong>friend code</strong>: 8 letters and numbers, shown at the bottom of the
+      <strong>FRIENDS</strong> screen (for example K7M2QX9A);</li>
+  <li>your <strong>cat name</strong>: the name shown on your profile in <strong>Settings</strong>
+      (for example SleepyBiscuit).</li>
+</ul>
+
+<form method="post" action="https://europe-west1-memora-bf520.cloudfunctions.net/push/account/web-request">
+  <label>Friend code
+    <input name="code" required minlength="8" maxlength="24" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="K7M2QX9A">
+  </label>
+  <label>Cat name
+    <input name="name" required minlength="3" maxlength="32" autocomplete="off" spellcheck="false" placeholder="SleepyBiscuit">
+  </label>
+  <label>Email <span>(optional: only if you want a reply; deleted with the request)</span>
+    <input name="contact" type="email" maxlength="254" autocomplete="email">
+  </label>
+  <button type="submit">Request deletion</button>
+</form>
+
+<p>
+  If the code and the name belong to the same account, it is deleted <strong>7 days</strong> later.
+  A web form cannot tell who is typing, so during those 7 days, anyone who still plays that account
+  sees a notice in the game and can keep it with one tap. If they do not match an account, we look at
+  the request by hand.
+</p>
+<p>
+  If you do not know your friend code or your cat name, or you would rather write, email
+  <a href="mailto:bendabas1@gmail.com?subject=Delete%20my%20Meowtropolis%20account">bendabas1@gmail.com</a>
+  with whatever you remember. We will reply.
+</p>
+
+<h2>What is deleted</h2>
+<ul>
+  <li>Your progress: coins (including coins you bought), cats, skills, levels and records, on the
+      phone and in the cloud copy of your save.</li>
+  <li>Your rows on every leaderboard and the duel ladder, your recorded matches, and your claimed cat
+      name, which becomes free for someone else.</li>
+  <li>The usage records the game sent about your matches.</li>
+  <li>Your friends list, friend requests and blocks, your friend code, and your friend-alert record.</li>
+  <li>Your game account with Unity, the service that runs sign-in, friends and live matches.</li>
+</ul>
+
+<h2>What is not deleted, and why</h2>
+<ul>
+  <li><strong>Purchases.</strong> Google Play keeps its own record of anything you bought, and deleting
+      your account does not refund coins. For the purchase record, see
+      <a href="https://support.google.com/googleplay/answer/9037938">Google Play's help</a>.</li>
+  <li><strong>Google Play Games.</strong> If you were signed in with Play Games, Google keeps that link
+      on its side. You can delete it at
+      <a href="https://play.google.com/games/profile">play.google.com/games/profile</a> &rarr; Your data.</li>
+  <li><strong>Server logs.</strong> Our hosting provider keeps routine request logs for up to 30 days,
+      and they can contain your player number. They are deleted automatically.</li>
+  <li><strong>Other players' phones.</strong> If you played a live match with someone, their phone may
+      still list your cat name under &ldquo;played with you&rdquo;. We cannot reach other people's phones.</li>
+</ul>
+
+<p class="note">
+  More about what the game collects: <a href="./">Meowtropolis privacy policy</a>.
+</p>
+
+<footer>
+  Meowtropolis &mdash; account deletion. Questions: <a href="mailto:bendabas1@gmail.com">bendabas1@gmail.com</a>
+</footer>
+
+</div>
+</body>
+</html>

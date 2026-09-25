@@ -5,7 +5,9 @@ friend-online push, the friend link, the live seated modes and two new analytics
 Meowtropolis main at **71c63f66** (2026-09-25 06:13). Every claim below names the file it came
 from, so it can be re-checked when the code changes. **Sections 2.6, 10 (items 1 and 4) and 12 were
 brought level on 2026-09-25 with the analytics server deployed at 07:00 that day (Meowtropolis
-b310a915)**, read from that code and checked against the live function. This is the evidence the privacy policy in
+b310a915)**, read from that code and checked against the live function. **Section 13 (account deletion) and
+the deletion answers in 12 were added on 2026-09-25 for a flow that is BUILT BUT NOT DEPLOYED**: the policy
+text that describes it must not go live before the server deploy and an APK with the button. This is the evidence the privacy policy in
 index.html is built on; if the code changes, change this file first and the policy second.
 
 Sources read (2026-09-02): Runtime/Meta/Analytics.cs, OnlineRuns.cs, OnlineBoards.cs, OnlineNames.cs,
@@ -583,9 +585,13 @@ Added 2026-09-25:
   reaches a friend's phone through Unity presence.
 - **No Firebase project id and no hosting domain in the policy.** Ben plans to move the game off the
   shared memora-bf520 project to its own; the policy already names neither, so keep it that way.
-- Nothing that promises a Unity-side deletion Ben cannot perform. **Uncertain** whether the UGS
-  dashboard lets him delete a player's account and friends data; until checked, the policy sends
-  Unity-held data to Unity, as it already did.
+- Nothing that promises a Unity-side deletion Ben cannot perform. **Settled 2026-09-25 (section 13):** he
+  can. The Unity account is deleted by the game itself (DeleteAccountAsync) or by the admin API / the
+  dashboard's Player Management; Cloud Save and Friends relationships must be deleted separately, and are
+  (Unity: "deleting a Player Account doesn't automatically delete player data in Cloud Save, active
+  Leaderboards, Friends, etc."). The policy now promises that, and only once the flow is deployed.
+- Not "deleted immediately". Deletion is scheduled 7 days out (with DELETE NOW in the game), and a web
+  request that cannot reach Unity through a service-account key leaves the Unity half to Ben by hand.
 - Not the 7-day request expiry as if it were a retention period. It is a client action run when the
   sender's game starts, not a server deletion.
 
@@ -607,8 +613,16 @@ processing data for the game, which Play does not count as "sharing"; that assum
   anonymous account and the Play Games link are created automatically. *Uncertain* whether Play treats
   that as account creation (which would require a web deletion link); if it does, the deletion email
   below is the path.
-- Do you provide a way for users to request that their data be deleted? **Yes** - by email to
-  bendabas1@gmail.com (the policy's deletion section).
+- Do you provide a way for users to request that their data be deleted? **Yes.** **From section 13, once
+  deployed:** in the app (Settings -> YOUR ACCOUNT -> DELETE ACCOUNT) and on the web at
+  https://bendabas.github.io/meowtropolis-legal/delete.html (form, or email). Before that deploy, the
+  honest answer is email only.
+- **Account deletion (the Data deletion section of the form).** Play treats the Unity account plus the Play
+  Games link as an account the app creates, so it asks for the delete-account URL: use
+  https://bendabas.github.io/meowtropolis-legal/delete.html. "Do you provide a way for users to request
+  that some or all of their data is deleted without requiring them to delete their account?" **Yes**:
+  friends can be removed and blocked in the game, ALERTS off deletes the push record, and the email route
+  takes partial requests. *Stated there too:* the 7-day grace, and what is kept (section 13).
 
 **Data types collected** (Collected: Yes; Shared: No; Processed ephemerally: No, unless stated)
 
@@ -626,8 +640,9 @@ processing data for the game, which Play does not count as "sharing"; that assum
 
 The Play Console asks the same four questions for each type above, and the answers are the same for all:
 collected Yes; shared No; ephemeral No (except as noted); deletable on request Yes for everything on
-Ben's servers. For Unity-held data (friends, presence, player name), the player can remove friends and
-block in the game, and account-level deletion at Unity is *uncertain* (section 11).
+Ben's servers. For Unity-held data (friends, presence, player name): **from section 13, once deployed**,
+DELETE ACCOUNT removes the relationships, the Cloud Save slot and the Unity account itself; before that,
+only removing friends and blocking in the game.
 
 **Not collected** - answer No: email address, phone number, physical address, race or ethnicity,
 political or religious beliefs, sexual orientation, other personal info; precise location; payment info
@@ -641,3 +656,34 @@ purchase receipts (on the phone only), and "recently played" (on the phone only)
 
 **Also for Ben before release:** FRIENDS-PUSH.md flags that Play's policy on notifications in apps for
 children needs checking. That is a Families-policy question, not a Data Safety one.
+
+## 13. Account deletion (built 2026-09-25, NOT deployed)
+
+Meowtropolis docs/ACCOUNT-DELETION.md is the design; the code is server-push/account*.js, ugs-account.js
+and Runtime/Meta/AccountDeletion.cs. Read from the code as committed on 2026-09-25, before any deploy.
+
+**Where every piece of a player's data lives, and what deletes it:**
+
+| Where | Keyed by | Deleted by |
+|---|---|---|
+| (default) meowtropolis_runs, _best_<arena>, _duel, _names, _events | save-file playerId | /account/erase or the daily accountSweep (account-store.js eraseScores); boards found by listing collections |
+| meowtropolis DB push_players, push_rate, friend_lookups, friend_codes, push_pairs | UGS id | the same (erasePush); pairs matched on the document id |
+| UGS Friends relationships (friends, requests, blocks) | UGS id | /account/erase with the player's own token only (Friends has no service-account route) |
+| UGS Cloud Save (agent 4's profile copy, when it ships) | UGS id | /account/erase with the player's token; the sweep with an admin key; the client's own hook as a fallback |
+| UGS Authentication account (and its Play Games link) | UGS id | the game (DeleteAccountAsync) last; the sweep with an admin key; else Ben in the dashboard |
+| The phone: profile, friends.json, outboxes, receipts, PlayerPrefs, SharedPreferences | - | Android clearApplicationUserData() after the server steps |
+
+**New data this flow itself stores** (named database meowtropolis): account_deletions/{ugsId} =
+{ugs, player, requestedAt, dueAt, source, ref?, contact?} for 7 days; an unmatched web request
+{code, name, contact?, requestedAt, ref} for up to 30 days; account_web_rate/{day} = {n}; and
+account_manual/{ugsId} = {at, needs} when the Unity half is left for a human. The optional contact email
+is new personal data, collected only on the web form, and deleted with the request.
+
+**Not deleted, stated in the policy:** Google Play purchase history; the Play Games link on Google's side;
+Cloud Logging request logs (default retention 30 days, not checked on this project); other players'
+"played with you" lists on their phones; Unity's own gateway IP logs (30 days, Unity's Friends privacy page).
+
+**Uncertain until deployed and tested:** that the push function's service account may delete in the
+(default) database (same project, so expected); that Unity's Friends and Cloud Save client REST routes
+accept DELETE with a player token as documented; that a deleted Unity account ends the Friends retention
+of its id as Unity's privacy page implies for the sweep path, where relationships cannot be removed first.
