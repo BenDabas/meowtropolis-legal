@@ -1,38 +1,65 @@
 ﻿# What actually leaves the phone
 
-Written 2026-09-02 by reading the code, not by assuming. Every claim below names the file it came
+Written 2026-09-02 by reading the code, not by assuming. **Updated 2026-09-25** for Friends, the
+friend-online push, the friend link, the live seated modes and two new analytics events, read against
+Meowtropolis main at **71c63f66** (2026-09-25 06:13). Every claim below names the file it came
 from, so it can be re-checked when the code changes. This is the evidence the privacy policy in
 index.html is built on; if the code changes, change this file first and the policy second.
 
-Sources read: Runtime/Meta/Analytics.cs, OnlineRuns.cs, OnlineBoards.cs, OnlineNames.cs,
+Sources read (2026-09-02): Runtime/Meta/Analytics.cs, OnlineRuns.cs, OnlineBoards.cs, OnlineNames.cs,
 PlayerIdentity.cs, PlayerProfile.cs, ProfileStore.cs, Accounts.cs, PlayGamesLink.cs,
 GameNotifications.cs, Runtime/Net/DuelNet.cs, DuelSession.cs, DuelLink.cs, QuickMatch.cs,
 DuelRoom.cs, Runtime/Store/Billing.cs, CoinPurchases.cs, CoinPacks.cs, Iap/GooglePlayBilling.cs,
 Server/handler.js, firestore-store.js, vocabulary.js, index.js, server.js, README.md,
 Packages/manifest.json, ProjectSettings/ProjectSettings.asset.
 
+Sources added (2026-09-25): Runtime/Meta/Friends.cs, FriendsPush.cs, MatchHealth.cs, Analytics.cs
+(again), Runtime/Net/FriendsUgs.cs, FriendsRunner.cs, FriendLinks.cs, FriendsProbe.cs, NetProbe.cs,
+OnlineNoticeboard.cs, ArenaQueue.cs, DuelNet.cs and DuelSession.cs (again),
+Runtime/UI/GameUi.FriendsParty.cs, GameUi.FriendsWide.cs, Assets/Plugins/Android/MeowPush.java,
+MeowPushService.java, MeowPush.androidlib/AndroidManifest.xml,
+FriendLinkManifest.androidlib/AndroidManifest.xml, mainTemplate.gradle, server-push/handler.js,
+store.js, fcm.js, ugs.js, index.js, firebase.json, package.json, server-friend-link/firebase.json,
+public/index.html, docs/FRIENDS.md, FRIENDS-DESIGN.md, FRIENDS-PUSH.md, HANDOFF-2026-09-25.md.
+
 ---
 
-## 1. The four destinations, and nothing else
+## 1. The destinations, and nothing else
 
-Every byte that leaves the phone goes to exactly one of these. There is no fifth.
+Every byte that leaves the phone goes to one of these. The scores function, Unity, Play Games and
+Play Billing were the whole list on 2026-09-02; the push function and Firebase Cloud Messaging are
+new on 2026-09-25, and Unity now also runs Friends.
 
 | Destination | Who runs it | What for |
 |---|---|---|
 | https://europe-west1-memora-bf520.cloudfunctions.net/scores | Ben own Google Cloud function, Firestore behind it, EU (europe-west1) | leaderboards, ghost runs, name registry, the game own analytics |
-| Unity Gaming Services (Authentication, Lobby, Relay) | Unity Technologies | the account, the 1v1 room, the 1v1 connection |
+| https://europe-west1-memora-bf520.cloudfunctions.net/push | Ben own Google Cloud function (codebase meowtropolis-push), a separate **named** Firestore database "meowtropolis" behind it | friend-online pushes, and the friend-code lookup behind friend links (section 9) |
+| Unity Gaming Services (Authentication incl. Player Names, Lobby, Relay, **Friends**) | Unity Technologies | the account, the friend code, the rooms and connections for every live mode, the friends list, presence and friend messages |
 | Google Play Games | Google | signing the player in on Android |
 | Google Play Billing | Google | buying coin packs |
+| Firebase Cloud Messaging | Google | Android only: minting the phone's notification token and delivering the push |
 
-**No third-party SDK of any other kind is in the build.** Packages/manifest.json has no ad network,
-no attribution SDK, no crash reporter, no Firebase Analytics, no Unity Analytics service package.
-The only Unity service packages are authentication, core, lobby, relay. The entry
-com.unity.modules.unityanalytics is the legacy built-in module, not the service, and nothing in the
-code calls it. Grepping Runtime/ for UnityWebRequest and http returns hits in exactly four files:
-Analytics.cs, OnlineRuns.cs, OnlineBoards.cs, OnlineNames.cs - all of them the one server above.
+**Still no ad, attribution, crash-reporting or analytics SDK.** Packages/manifest.json adds exactly
+one Unity service since 2026-09-02, com.unity.services.friends 1.2.0 (beside authentication, core,
+lobby, relay). Assets/Plugins/Android/mainTemplate.gradle adds exactly one Google library,
+com.google.firebase:firebase-messaging 24.1.2 - not the Firebase Unity SDK and not Firebase Analytics
+(grep of mainTemplate.gradle for "firebase|analytics" returns that one line). The entry
+com.unity.modules.unityanalytics is still the legacy built-in module, and nothing calls it.
 
-Notifications are scheduled locally on the device (GameNotifications.cs, Unity mobile notifications
-package). Nothing about them is sent anywhere; there is no push service.
+Grepping Runtime/ for UnityWebRequest now returns eight files (at 71c63f66). Four are the scores function as before
+(Analytics.cs, OnlineRuns.cs, OnlineBoards.cs, OnlineNames.cs). FriendsPush.cs and FriendLinks.cs are
+the push function. NetProbe.cs is a diagnostics probe that does nothing unless a file named
+netprobe.txt is placed in the app's storage by hand, and then reads the scores board with the literal
+player id "netprobe". GameUi.cs matches only in a comment. The only literal URLs in Runtime/ and
+Plugins/ are the two function base URLs above.
+
+**Uncertain:** what Google's firebase-messaging library itself sends to Google in order to mint and
+refresh a token (it registers a Firebase installation). That is inside Google's library and not
+visible in this code.
+
+The daily reminders are still scheduled locally on the device (GameNotifications.cs, Unity mobile
+notifications package); nothing about them is sent anywhere. **The friend-online alert is different:
+it is a real push service, section 9.**
 
 ---
 
@@ -42,6 +69,13 @@ Firebase project memora-bf520, Firestore, region europe-west1 (Belgium). Confirm
 OnlineRuns.DefaultBaseUrl and Server/README.md. The game holds no database credentials and never
 touches Firestore directly; the rules are "allow read, write: if false" for every client (README,
 checked in console 2026-08-29). Everything goes through the HTTP routes.
+
+**Added 2026-09-25, from docs/FRIENDS-PUSH.md and HANDOFF-2026-09-25.md, not from code:** Memora's own
+backup script (scripts/snapshot-firestore-json.mjs, in the Memora repo) walks every collection of this
+project's `(default)` database, which holds the meowtropolis_* collections above, into a file Memora
+commits to git. Memora's last backup (2026-08-24) held no game documents, so nothing has leaked; the
+next run would include them. The push data was put in a named database for exactly this reason. Ben
+plans to move the game to its own Firebase project, which ends it.
 
 ### 2.1 A finished match - POST /runs
 
@@ -119,7 +153,12 @@ kept and retried if the send fails; bounded at 500 held events. Batch body is
 | purchase | kind (cat, skill, level, coinpack), item id, price in coins, resulting balance, amount |
 | claim | kind (gift, mission, achievement), id, amount, resulting balance |
 | tutorial | which step was completed |
-| notification_open | which reminder was tapped - **see the bug in section 8** |
+| notification_open | which reminder was tapped - **see the bug in section 10** |
+| match_health (new 2026-09-20) | ONLINE-mode matches only, of 5 s or more (MatchHealth.cs): arena, live or bots, **device model, OS version, GPU name, RAM, CPU core count** (SystemInfo), frame-rate median and 5th percentile, network silences, reconnects, refereeing time, snapshot timing, seats, queue window, wire version, duration - **see the bug in section 10** |
+| item (new) | which belt item was used in a match and on which leg (MatchController.OnBeltUsed) - **see the bug in section 10** |
+
+match_health's device fields describe a kind of handset: no device id, serial, IMEI or Android id is
+read (grep of Runtime/ for them still returns nothing).
 
 Stored in meowtropolis_events, one document per batch, auto-id, plus at.
 
@@ -161,21 +200,46 @@ not only for players who press 1v1.
 - **Authentication**: SignInAnonymouslyAsync(). Unity mints an anonymous account and caches its
   token per install. The Unity account id is stored back into the local save as BoundAccountId only
   once Play Games links successfully (Accounts.RecordBinding). This id is **never** sent to
-  Meowtropolis own server.
+  Meowtropolis own scores server. **Changed 2026-09-24/25:** it is now the key of everything in
+  sections 8 and 9, it is sent (as the verified `sub` of the UGS access token) to the push function,
+  and the account's **Player Name is set to the friend code** (FriendsUgs.EnsureCodeAsync,
+  UpdatePlayerNameAsync) - e.g. "K7M2QX9A#16522", where the #number is Unity's.
 - **Lobby**: used for the 1v1 room. The room holds the Relay join code and the city seed
   (DuelNet.HostAsync). Friend rooms are private; quick-match rooms are public under the fixed name
-  "quickduel" (DuelRoom.cs) so two strangers can find each other.
-- **Relay**: carries the match traffic between the two phones, DTLS-encrypted
-  (DuelNet.ConnectionType).
+  "quickduel" (DuelRoom.cs) so two strangers can find each other. **Since 2026-09-15 also the meeting
+  list for the live seated modes** - ONLINE (8 seats), Catball and Cats vs Dogs (6) - see 3.1.
+- **Relay**: carries the match traffic between the phones, DTLS where Relay offers it, the first
+  endpoint otherwise (DuelNet.ToServerData, ArenaQueue.ToServerData: "DTLS where it is offered, the
+  first endpoint otherwise"). **Uncertain:** whether that fallback endpoint is unencrypted; the code
+  does not say and it has not been observed.
+- **Friends** (new 2026-09-24): relationships, requests, blocks, presence and friend messages. Section 8.
 
 **What crosses between two players during a 1v1** (DuelSession.SendHello, DuelIntro): protocol
-version, the eat rule, duel rating, cat id, up to three skill ids with levels - then positions,
-inputs, eaten-object indices and match events. DuelIntro own comment states it and the wire format
-confirms it: **the display name is deliberately not sent, and neither is the player id.** One
-player never learns who the other is.
+version, the eat rule, duel rating, cat id, **the display name**, up to three skill ids with levels -
+then positions, inputs, eaten-object indices and match events. **Stale on 2026-09-02, corrected
+2026-09-25:** the name has been in the hello since wire version 6 (commit a86acffd, 2026-09-02, "Two
+households played a 1v1 and both fought a bot called Rival"); DuelIntro.Name's own comment records the
+reversal. The save-file player id is still not sent. The opponent's **UGS player id** is read from the
+shared lobby (DuelNet.LearnPeerAsync, PeerPlayerId) - every lobby member can see every other member's
+Player.Id, that is how Lobby works - and is kept past the match for "recently played" (section 8.4).
 
-Unity retention of the account, lobby and relay data is Unity, and nothing in this codebase can
-state it. Project id cb47c491-3f7e-4db6-9fa5-25889ec17ca1, organisation bendabas1
+### 3.1 The live seated modes - what goes into the Unity lobby (ArenaQueue.cs)
+
+Per player, member-visible (only phones in the same list can read it): `name` (the display name),
+`cat`, and for ONLINE also `kit` (equipped skill ids and levels), `rank` (rank points) and `fit` (a
+number from DeviceFitness: how well this phone could referee, derived from hardware and a
+self-measurement). Per list, **public** (readable by any phone querying lobbies): a protocol `tag`, the
+host's **UGS player id** (`host`, indexed S2, so a lone host can say "any list but mine"), the list's
+birth time and the host's **UTC offset in minutes + 720** (`tz`, indexed N2, so nearby players are
+tried first). Member-visible per list: relay code, seed, roster, deadline, arena. The seat's UGS id is
+kept for "recently played" and the results screen's ADD (ArenaQueue.Seat.PlayerId: "Never shown to
+anyone").
+
+OnlineNoticeboard.cs writes referee claims (seat numbers and relay codes) into the same lobby during a
+match: technical, nothing about the person.
+
+Unity retention of the account, lobby, relay and friends data is Unity, and nothing in this codebase
+can state it. Project id cb47c491-3f7e-4db6-9fa5-25889ec17ca1, organisation bendabas1
 (ProjectSettings.asset).
 
 ## 4. Google Play Games (Android only, new today)
@@ -225,11 +289,23 @@ saying so is still accurate on this point.
 The exception: **the player can replace that id by hand.** GameUi.OnPairSavePressed writes an
 8-character typed pairing code straight into ProfileStore.Current.PlayerId, so two phones can share
 one identity. So the id is "random unless the player chose to pair devices, in which case it is the
-short code they typed on both". (It is also currently broken - see section 8.)
+short code they typed on both". (It is also currently broken - see section 10.)
 
 Accounts.AdoptKey can also change the id, but its only caller path is disabled today: the "already
 linked to another account" case deliberately stays on the local key until a server-side merge route
 exists.
+
+**Since 2026-09-24 there are two more identifiers, and neither is the save-file id** (re-checked
+2026-09-25: OnPairSavePressed still writes the typed code into PlayerId, GameUi.cs:8956):
+
+- **The UGS player id** - Unity's id for the anonymous account. The key of the friends list, of
+  presence, of friend messages, of the push records and of the friend-code table. It does not survive a
+  reinstall or a new phone (FRIENDS-DESIGN.md names this as a known gap; the Play Games link is the
+  planned fix).
+- **The friend code** - 8 characters from PlayerIdentity's unambiguous alphabet, drawn with
+  UnityEngine.Random (PlayerIdentity.NewPairCode), stored in the phone's friends.json, set as the Unity
+  Player Name (Unity appends #number), and claimed on the push function for friend links (section 9.3).
+  Random; not derived from the player, the device or the save-file id.
 
 ## 7. Names - the brief second claim, re-checked
 
@@ -255,7 +331,154 @@ So the policy has to say plainly that **the name is public** - it appears on oth
 leaderboards and on recorded ghost opponents - and that a player who types their real name into it
 has published it. Names are never checked against anything but the blocklist.
 
-## 8. Bugs found while reading (not privacy, but Ben should know)
+**Where else the name goes, as of 2026-09-25:** to the opponent in a 1v1 (section 3), to every phone in
+a live seated list (3.1), into Unity Friends presence for friends to see (8.2), and into the other
+players' "recently played" lists on their own phones (8.4). Incoming names pass through
+PlayerIdentity.FromWire on arrival. The share-sheet message and the friend link carry **no name**
+(8.1, 9.3).
+
+## 8. Friends (new 2026-09-24/25) - UGS Friends
+
+FriendsUgs.cs behind the Friends.cs facade; started by FriendsRunner.cs once the home screen is shown
+and a UGS session exists (Accounts.ServicesReady). Runs for every signed-in player on every platform -
+it is not gated on having friends. The product spec is docs/FRIENDS.md, the design FRIENDS-DESIGN.md.
+
+### 8.1 Adding a friend
+
+- By the long code: AddFriendByNameAsync("K7M2QX9A#16522") - a Unity call.
+- By the short code alone, or by opening a friend link: FriendLinks.ResolveAsync asks the push
+  function for the UGS id behind the 8 characters, then AddFriendAsync(id) (section 9.3).
+- From "recently played" or the results screen: AddFriendAsync(ugsId).
+- **Mutual accept**: a request is only a request until the other side accepts (the service's own rule).
+- **Share**: the Android share sheet with the text "Play Meowtropolis with me! Add my friend code:
+  <code>" (GameUi.FriendsWide.ShareFriendCode at 71c63f66). An uncommitted change in flight on
+  2026-09-25 makes it "... Tap to be my friend: <link> (or add my code: <code>)". Neither carries the name.
+- Client-side limits only (FRIENDS-DESIGN.md calls it an honest deviation): 20 requests an hour, one
+  invite per friend per 30 s, one quick message a second. Every unanswered request this phone sent is
+  withdrawn after 7 days (ExpireOldRequests), when the game next starts.
+
+### 8.2 Presence - what a friend sees (FriendsRunner.Publish, FriendsUgs.Activity)
+
+SetPresenceAsync on state changes only (home, queue/match, results, pause, resume, quit):
+availability ONLINE / AWAY / OFFLINE plus an activity JSON
+`{ s: home|match|results, m: solo|online|duel|catball|hunt, n: display name, c: cat id, lv: level,
+tz: UTC offset in minutes, v: wire version }`. Unity supplies last-seen. Presence is only delivered to
+friends (FriendsUgs.OnRelationshipAdded's comment). `tz` is sent but nothing in the client or the push
+server reads it back (the push uses the IANA zone from registration, section 9).
+
+### 8.3 Messages - no free text, by construction
+
+Every message is an Envelope `{ k, i, id, m, l, t }` (FriendsUgs.Envelope):
+- `q`: a quick message, `i` indexes Friends.Quick - exactly eight fixed phrases: LET'S PLAY!, GOOD GAME!,
+  ONE MORE?, WAIT FOR ME, NICE!, SORRY!, THANKS!, BRB. The words never travel; a receiver drops an index
+  it does not have.
+- `inv`, `ans`, `go`, `cxl`, `lv`, `pm`, `list`: invite, answer, "go" (carrying a 1v1 lobby join code in
+  `l`), cancel, leave, party line-up (UGS ids), the leader's list id.
+
+There is no text field. OnMessage drops anything from a sender who is not on the friends list. Block
+(FriendsUgs.Block) removes the friendship first, then AddBlockAsync, and drops queued invites from that id.
+
+### 8.4 Recently played - on the phone only
+
+FriendsUgs.NoteRecent, called from GameUi.FriendsParty.NoteRecentPlayers at the results screen: the
+last **25** people (and bots, with invented ids "b:..." that never reach Unity) as
+`{ id: UGS id, name, cat, mode, at }`. Stored in **friends.json in the app's own storage** with the
+friend code, the requests this phone sent (id, name, cat, time), the online-toast stamps and the
+request timestamps (FriendsUgs.Store, StoreFile). **Nothing in it is uploaded.** Deleted on uninstall.
+
+The same is true the other way: **other players' phones keep this player's UGS id, name and cat** in
+their own recently-played list after a live match.
+
+Also on the phone (PlayerPrefs / SharedPreferences): `meow_friend_name_<ugsId>` - the last real name
+seen for each friend, so an offline friend's row is not a code (FriendsUgs.Apply, commit 243ea787);
+`push.friendids`, `push.alerts`, `push.asked`; and `meow_push_names` (section 9.2).
+
+## 9. Friend-online pushes and friend codes (new 2026-09-25) - server-push/
+
+### 9.1 What the phone sends (FriendsPush.cs, MeowPush.java) - Android only
+
+Once per session, after the home screen and a UGS session, on **every Android phone** (not gated on
+having friends, and not gated on the ALERTS toggle):
+
+1. Firebase is initialised by hand from options in code (FriendsPush: app id, API key, project id
+   memora-bf520, sender id) and FirebaseMessaging.getToken() mints the **FCM token**.
+2. POST /push/register `{ fcm, tz, alerts, platform }` - the token, the phone's **IANA time zone**
+   (TimeZone.getDefault().getID(), e.g. "Asia/Jerusalem"), the ALERTS toggle, "android".
+3. POST /push/online `{}` - "I'm online", which fans out to friends.
+4. POST /push/heartbeat `{}` every 5 minutes while focused, and on resume (or /push/online again after
+   more than 10 minutes away).
+
+Every call carries `Authorization: Bearer <UGS access token>`. The server verifies it against Unity's
+JWKS (issuer, project cb47c491-..., expiry; ugs.js) and takes the caller's id from `sub` only - no body
+field names a player. **No name and no text is sent.** FriendsPush's own summary: "The server gets a
+token, a time zone and a boolean."
+
+Switching ALERTS off re-registers with `alerts: false`; **the token stays stored** - the client never
+calls /push/unregister (grep of Runtime/ and Plugins/Android/ for "unregister": no match, while
+"/push/register" matches FriendsPush.cs:389 as the control). Turning ALERTS off stops
+this phone *receiving* alerts; it does not stop /push/online from alerting this player's friends.
+
+iOS: FriendsPush is compiled out (`#if UNITY_ANDROID`). There is no APNs key.
+
+### 9.2 What the server does and stores (handler.js, store.js, fcm.js)
+
+Named Firestore database **"meowtropolis"** (store.js; not `(default)`, so Memora's committed JSON
+backup never sweeps it). Location **eur3** (Europe multi-region) per FRIENDS-PUSH.md's creation record -
+the code does not state it; the function itself runs in europe-west1 (index.js).
+
+- `push_players/{ugsId}`: `tokens` (at most **3**, newest wins, each `{t, at, platform}`), `tz`,
+  `alerts`, `lastSeen`, `lastOnlineCall`.
+- `push_pairs/{to}_{from}`: `lastSent`. **This is a record of which pairs of UGS ids have alerted each
+  other**, so it does reveal that two ids are friends, even though the friend list itself is never
+  stored (handler.js: friendsOf is fetched from UGS per call and not kept).
+
+The fan-out on /push/online: for each id UGS lists as the caller's FRIEND (asked of Unity with the
+caller's own token, ugs.js createFriendsOf), skip it unless it has a doc, alerts on, a token, was not
+seen in the last 10 minutes, is not in 22:00-08:00 in its own IANA zone (an unknown zone counts as
+quiet), and the pair has not been alerted in 3 h (a transaction). Then FCM sends a **data-only** message
+`{ kind: "friend_online", sender: <caller's UGS id> }`, high priority, 30-minute TTL (fcm.js).
+/push/online is rate-limited to once per caller per 10 minutes, server-side.
+
+**The friend's name is cached on the phone only - verified.** fcm.js's payload has two keys, kind and
+sender, and handler.js passes only `{ kind, from: me.id }`. MeowPushService.onMessageReceived builds
+"<name> is online / Tap to play together" from MeowPush.nameFor(), a SharedPreferences file
+`meow_push_names` (id -> name, names cut to 32 characters, cleared when it reaches 200 entries) written
+by FriendsPush.RememberName from the friends list, which skips codes and "A FRIEND" (IsStandIn, commit
+243ea787). An unknown id reads "A friend is online". Precisely: the name reaches the phone through
+**Unity presence** (8.2), not through the push server.
+
+**Retention, the honest answer:** no TTL, no expiry, no deletion code. FCM tokens that FCM reports as
+unregistered or invalid are removed (removeTokens); the fourth phone pushes out the oldest token.
+Everything else - the player doc, the pair docs, the friend codes (9.3) and the lookup counters - is
+kept until deleted by hand.
+
+### 9.3 Friend codes and friend links - **in the tree, not deployed**
+
+Commits 41a30ed6, 01ab03fd, 5b56f9c3 and 71c63f66 landed on main between 06:00 and 06:13 on 2026-09-25.
+Their own messages say "(not deployed)"; a read-only probe at 06:2x returned **404** for
+https://meowtropolis-friends.web.app/f/K7M2QX9A while the scores function's /health returned 200 as the
+control. So: code present, server routes and page not live.
+
+- **POST /friend/claim `{ code }`** (handler.js claimCode, store.js claimCode): binds the 8-character code
+  to the caller's UGS id in `friend_codes/{code}` = `{ owner, at }`, in a transaction, first owner wins,
+  never moved. FriendsUgs.EnsureCodeAsync calls it on start until it succeeds (a taken code, 409, draws a
+  new one).
+- **POST /friend/resolve `{ code }`**: returns `{ id: <owner's UGS id> }`. Needs a valid UGS token;
+  counted per caller in `friend_lookups/{ugsId}` = `{ from, n }`, at most 60 an hour, so codes cannot be
+  walked. The resolved id goes straight into AddFriendAsync. **This is the one route in either server
+  that returns another player's id** (section 2.5's rule is about the scores server and still holds
+  there): a UGS id, never the save-file id, and only to a caller who already holds that player's code.
+- **The link** `https://meowtropolis-friends.web.app/f/<CODE>` (FriendLinks.LinkFor) - the code and
+  nothing else, **no name** (the page's own comment: "a kids' game should not put a nickname into a URL
+  that messengers and browsers log"). The page (Firebase Hosting, site meowtropolis-friends,
+  server-friend-link/) has no third-party scripts, no cookies, no analytics, sends `Referrer-Policy:
+  no-referrer`, and on Android hands to `meowtropolis://friend/<CODE>` with a Play Store fallback.
+  FriendLinkManifest.androidlib adds the intent filter; FriendLinks.TakeLaunchCode reads the code and
+  FriendsUgs.OpenLink sends the request.
+- As with any web page, Google's hosting sees the visitor's request, the code in the path included.
+  That is infrastructure logging outside this codebase.
+
+## 10. Bugs found while reading (not privacy, but Ben should know)
 
 1. **notification_open events are silently thrown away, and they take the whole batch with them.**
    Analytics.NotificationOpen is live (called from GameUi.cs:4984), but the server EVENT_NAMES set
@@ -270,9 +493,23 @@ has published it. Names are never checked against anything but the blocklist.
    shared now".
 3. **Billing.SandboxAllowedOnDevice is still true**, as its own comment says it must not be at
    release, alongside ProfileStore.TesterCoinGrant. Not a privacy matter; it is a release blocker
-   sitting next to one.
+   sitting next to one. (Re-checked 2026-09-25: both still there, Billing.cs:36 and ProfileStore.cs:43.)
+4. **match_health and item events are refused too, the same way as bug 1** (found 2026-09-25).
+   Server/handler.js EVENT_NAMES is still the seven names of 2026-09-02 (control: 'app_open' matches);
+   the last commit to Server/handler.js is 2026-09-02, and no commit on any branch adds match_health to
+   Server/. match_health calls Flush() at once, so the batch it rides in - usually carrying that
+   ONLINE match's match_end - is refused with 400 and discarded by the client (Analytics.cs:364-373).
+   **If the deployed function matches the tree**, no ONLINE match has been recorded in analytics since
+   2026-09-20, and any batch holding a belt-item event is lost as well. Uncertain only in that the
+   deployed function was not probed; adding the names to EVENT_NAMES (and their fields to the
+   whitelists) plus a redeploy fixes it. Privacy note: the device fields are sent and refused, so today
+   they are transmitted but not stored; once the server accepts them they are stored.
+5. **The push record outlives its purpose.** Every Android player gets a push_players doc whether or
+   not they have friends, the ALERTS toggle keeps the token, and no code ever deletes a doc (section
+   9.2). Not a bug; a data-minimisation choice Ben may want: register only once there is a friend, and
+   call /push/unregister when ALERTS goes off.
 
-## 9. Things the policy must NOT say
+## 11. Things the policy must NOT say
 
 - No named regulation. Nothing in the code implements an age gate, a consent flow, a data-export
   route or a documented retention schedule, so claiming any framework by name would be a claim the
@@ -283,3 +520,77 @@ has published it. Names are never checked against anything but the blocklist.
   Games link is new as of today.
 - Not "anonymous". The id is random and not derived from the device, which is better than most, but
   a random id that follows a player across matches is still an identifier.
+
+Added 2026-09-25:
+
+- Not "no chat and no messages" or "players cannot contact each other outside a match". Friends
+  can send each other eight fixed phrases and invites at any time. The true claim is **no free-text
+  chat**, and **only accepted friends** can reach a player.
+- Not "your name is not sent in a 1v1" - it has been since wire version 6 (section 3).
+- Not "there is no push service" - there is one, on Android (section 9).
+- Not "nothing identifies your phone" without a qualifier - the FCM token addresses this install on
+  this phone. No advertising id and no hardware id is still true.
+- Not "the game never receives your location" without a qualifier - it reads the time-zone setting
+  and sends it. No location permission and no coordinates is still true.
+- Not "the name never leaves the phone" for alerts - it never passes through *our* server, but it
+  reaches a friend's phone through Unity presence.
+- **No Firebase project id and no hosting domain in the policy.** Ben plans to move the game off the
+  shared memora-bf520 project to its own; the policy already names neither, so keep it that way.
+- Nothing that promises a Unity-side deletion Ben cannot perform. **Uncertain** whether the UGS
+  dashboard lets him delete a player's account and friends data; until checked, the policy sends
+  Unity-held data to Unity, as it already did.
+- Not the 7-day request expiry as if it were a retention period. It is a client action run when the
+  sender's game starts, not a server deletion.
+
+## 12. Google Play Data Safety answers
+
+Ready to copy into Play Console -> App content -> Data safety. Derived from sections 1-11, for the
+build at 71c63f66 **with the friend link deployed**. Unity and Google act as service providers
+processing data for the game, which Play does not count as "sharing"; that assumption is behind every
+"Shared: No" below. **Uncertain** items are marked; decide them before submitting.
+
+**Overview questions**
+
+- Does your app collect or share any of the required user data types? **Yes.**
+- Is all of the user data collected by your app encrypted in transit? **Yes** - HTTPS to both
+  functions, to Unity and to Google. *Uncertain:* the Relay fallback when DTLS is not offered
+  (section 3). Answer Yes only if Relay's plain endpoint is still encrypted, or once the fallback is
+  removed.
+- Which account creation methods does your app support? **None the player performs.** Unity's
+  anonymous account and the Play Games link are created automatically. *Uncertain* whether Play treats
+  that as account creation (which would require a web deletion link); if it does, the deletion email
+  below is the path.
+- Do you provide a way for users to request that their data be deleted? **Yes** - by email to
+  bendabas1@gmail.com (the policy's deletion section).
+
+**Data types collected** (Collected: Yes; Shared: No; Processed ephemerally: No, unless stated)
+
+| Play category -> type | What it is here | Required or optional | Purposes |
+|---|---|---|---|
+| Personal info -> Name | The cat name (a nickname; generated by default, may be typed). Uploaded with runs, duels and names; in Unity presence and lobbies | Required (a name is always assigned and uploaded) | App functionality |
+| Personal info -> User IDs | The random save-file id; the UGS player id; the friend code | Required | App functionality, Analytics, Account management |
+| Device or other IDs | The FCM token (Android only) | Required on Android (registered for every Android player, ALERTS on or off) | App functionality |
+| Location -> Approximate location | *Judgement call.* The IANA time-zone name (push) and the UTC offset (lobby, presence). Never coordinates, no location permission | Required | App functionality |
+| Financial info -> Purchase history | The purchase analytics event: coin pack id, coins granted, new balance; coin spends | Required | Analytics |
+| Messages -> Other in-app messages | The eight fixed quick phrases and invites, relayed by Unity Friends between friends | Optional (only if the player uses Friends) | App functionality. *Uncertain* whether Unity stores them or relays them ephemerally |
+| App activity -> App interactions | Analytics events (app open, match start/end/quit, claims, tutorial, reminder taps, items) and match results for boards and ghost runs | Required | Analytics, App functionality |
+| App activity -> Other actions | Friends list, requests, blocks and presence (online, mode, level, last seen), held by Unity | Required (presence is published for every signed-in player; only friends can read it) | App functionality |
+| App info and performance -> Diagnostics | match_health: device model, OS, GPU, RAM, cores, frame rate, network quality (ONLINE mode) | Required | Analytics. (Refused by the server today, bug 10.4; declare it anyway, since the client sends it) |
+
+The Play Console asks the same four questions for each type above, and the answers are the same for all:
+collected Yes; shared No; ephemeral No (except as noted); deletable on request Yes for everything on
+Ben's servers. For Unity-held data (friends, presence, player name), the player can remove friends and
+block in the game, and account-level deletion at Unity is *uncertain* (section 11).
+
+**Not collected** - answer No: email address, phone number, physical address, race or ethnicity,
+political or religious beliefs, sexual orientation, other personal info; precise location; payment info
+(Google Play Billing handles it; the game never sees it), credit score, other financial info; health,
+fitness; emails, SMS or MMS; photos, videos, voice or sound recordings, music, other audio; files and
+docs; calendar; contacts; in-app search history, installed apps, other user-generated content, web
+browsing history; crash logs.
+
+**Not in this list, deliberately:** the daily reminders (scheduled on the phone, nothing sent), the
+purchase receipts (on the phone only), and "recently played" (on the phone only).
+
+**Also for Ben before release:** FRIENDS-PUSH.md flags that Play's policy on notifications in apps for
+children needs checking. That is a Families-policy question, not a Data Safety one.

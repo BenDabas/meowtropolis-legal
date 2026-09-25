@@ -204,7 +204,7 @@
 <header>
   <p class="kicker">Meowtropolis</p>
   <h1>Privacy Policy</h1>
-  <p class="dateline">In effect from 2 September 2026</p>
+  <p class="dateline">In effect from 25 September 2026</p>
 </header>
 
 <div class="summary">
@@ -214,6 +214,7 @@
     <li>The game gives your save file a <strong>random number</strong> when you first open it. That number is how the leaderboard tells one player from another. It is not your phone, and it is not you.</li>
     <li>You get a <strong>cat name</strong> such as SleepyBiscuit. You can change it. Other players can see it, so please do not put your real name in it.</li>
     <li>When you finish a match, the game sends the <strong>result</strong> of that match so it can appear on the leaderboard and so other people can play against a recording of your run.</li>
+    <li>You can add <strong>friends</strong>. A friend sees when you are online and can invite you to play. There is <strong>no typed chat</strong>: friends can only send each other a few fixed phrases, such as GOOD GAME!. On Android, the game can tell you when a friend comes online.</li>
     <li>There are <strong>no ads</strong> and <strong>no advertising companies</strong> in this game. Nothing you do here is sold, shared for marketing, or used to follow you around other apps.</li>
     <li>If you delete the game, the random number on your phone is gone with it. If you also want your rows removed from the leaderboard, write to us and we will delete them.</li>
   </ul>
@@ -222,7 +223,7 @@
 <h2>Who wrote this</h2>
 <p>
   Meowtropolis is made by one person, Ben Dabas. The whole game, the leaderboard and the small
-  server behind it are his. There is no company, no marketing team, and nobody else with access.
+  servers behind it are his. There is no company, no marketing team, and nobody else with access.
   You can always reach him at
   <a href="mailto:bendabas1@gmail.com">bendabas1@gmail.com</a>.
 </p>
@@ -232,11 +233,11 @@
   <p>This is not a promise about how we behave. These things simply are not in the game &mdash; there is no code anywhere that asks for them.</p>
   <ul>
     <li><strong>No name, email address or phone number.</strong> There is no sign-up form and no login screen.</li>
-    <li><strong>No advertising ID and no device ID.</strong> Nothing identifies your phone or lets anyone follow you into another app.</li>
-    <li><strong>No location.</strong> The game never asks where you are and never receives it.</li>
-    <li><strong>No contacts, photos, camera, microphone or files.</strong></li>
+    <li><strong>No advertising ID and no hardware ID.</strong> Nothing lets anyone follow you into another app. (On Android, friend alerts need an address that lets a notification reach this game on your phone. That is explained <a href="#alerts">below</a>.)</li>
+    <li><strong>No location.</strong> The game has no permission to know where you are and never asks for it. It does read your phone's time-zone setting; <a href="#timezone">here is why</a>.</li>
+    <li><strong>No contacts, photos, camera, microphone or files.</strong> Your friends in the game are people you added inside the game, not your phone's contacts.</li>
     <li><strong>No ads, and no advertising or tracking companies at all.</strong> There is no ad network, no attribution service and no outside analytics service in the game.</li>
-    <li><strong>No chat and no messages.</strong> Players cannot send each other text of any kind.</li>
+    <li><strong>No typed chat.</strong> Players cannot write text to each other. Friends can send one of eight fixed phrases, and nothing else.</li>
     <li><strong>No card numbers or payment details.</strong> If you buy coins, Google handles the payment. The game never sees the card.</li>
     <li><strong>No age or date of birth.</strong> The game never asks.</li>
   </ul>
@@ -260,6 +261,18 @@
   you type the same short code on both, and that code becomes the player number on both of them.
 </p>
 
+<h3>Your friend code</h3>
+<p>
+  To make friends possible, the game also gives you a <strong>friend code</strong>: eight random
+  letters and numbers, such as K7M2QX9A. Like your player number, it is made up by the game and is not
+  taken from you or your phone. It is what you give a friend so they can add you.
+</p>
+<p>
+  Friends are keyed to the account Unity gives your copy of the game (see
+  <a href="#live">playing against other people</a>), not to your player number. That account number is
+  never shown to anyone.
+</p>
+
 <h3>Your cat name</h3>
 <p>
   The game gives you a two-word cat name from a fixed list of cat words &mdash; SleepyBiscuit,
@@ -267,7 +280,8 @@
 </p>
 <p>
   <strong>Your name is public inside the game.</strong> It is printed next to your score on the
-  leaderboards, and it is shown to other players when they meet a recording of one of your runs.
+  leaderboards, it is shown to other players when they meet a recording of one of your runs, it is
+  shown to the people you play live matches with, and your friends see it on their friends list.
   Please treat it as something the world can read, and do not type your real name, your school, or
   anything you would not want a stranger to see.
 </p>
@@ -296,8 +310,8 @@
 </ul>
 <p>
   Those last numbers exist for one reason: they let the game replay your run as an opponent for
-  somebody else. When you play the online mode, the cats around you are recordings of other people's
-  matches, played back. Yours becomes one of them.
+  somebody else. When you play the online mode, some of the cats around you can be recordings of
+  other people's matches, played back. Yours can become one of them.
 </p>
 
 <h3>The leaderboards</h3>
@@ -335,30 +349,117 @@
     <tr><td>You collect a reward</td><td>which daily gift, mission or achievement, and the coins it paid</td></tr>
     <tr><td>Tutorial</td><td>which tutorial step you finished</td></tr>
     <tr><td>You tap a reminder</td><td>which reminder it was</td></tr>
+    <tr><td>You use an item in a match</td><td>which item</td></tr>
+    <tr><td>An online match ends</td><td>what kind of phone it ran on (the model name, the system version, the graphics chip, the amount of memory and the number of processor cores), how smoothly the match ran and how steady the connection was</td></tr>
   </tbody>
 </table>
 </div>
 <p class="note">
   Times are recorded only to the nearest whole second, and nothing here records where you are, what
-  else is on your phone, or anything you typed.
+  else is on your phone, or anything you typed. The phone details describe the kind of phone, so we
+  can tell which phones the game runs badly on. They contain no serial number and no device ID.
 </p>
 
-<h2>Playing 1 v 1 against another person</h2>
+<h2 id="live">Playing live against other people</h2>
 <p>
-  The 1&nbsp;v&nbsp;1 mode connects two phones through <strong>Unity</strong>, the company whose
-  software the game is built with. Unity provides the room where two players meet and the connection
-  their phones talk over. The connection is encrypted.
+  The live modes &mdash; 1&nbsp;v&nbsp;1, the online city match, Catball and Cats vs Dogs &mdash;
+  connect phones through <strong>Unity</strong>, the company whose software the game is built with.
+  Unity provides the room where players meet and the connection their phones talk over.
 </p>
 <p>
-  What the two phones actually tell each other is: which cat each player is wearing, which three
-  skills they have, their duel rating, where their cat is moving and what it has eaten. <strong>Your
-  name is deliberately not sent, and neither is your player number.</strong> The person you duel
-  never learns who you are.
+  Unity also gives every copy of the game an account of its own when the game starts, so that its
+  services will answer. It has no name, email or phone number on it. It has a number, and it holds
+  your friend code and your friends list (see <a href="#friends">Friends</a>).
 </p>
 <p>
-  Unity also gives every copy of the game an anonymous account when the game starts, so that its
-  services will answer. It is anonymous in the real sense: it holds nothing you typed, because you
-  never typed anything.
+  What the phones in a match tell each other is: your cat name, which cat you are wearing, your skills
+  and their levels, your rating or rank, where your cat is moving and what it has eaten. In the online
+  city match, the room also holds a number saying how well your phone can run the match, so the
+  strongest phone can host it. <strong>Your player number is not sent.</strong> The other phones in the
+  room can see your Unity account number, because that is how Unity's rooms work, and it is never shown
+  to anyone.
+</p>
+<p id="timezone">
+  To find players who are near you first, a waiting room shows other phones looking for a match how
+  many hours ahead of or behind UTC the phone that opened it is &mdash; for example, &ldquo;three hours
+  ahead&rdquo;. That is the time-zone setting on the phone, never your position.
+</p>
+<p>
+  After a live match, each player's game keeps a short <strong>&ldquo;played with you&rdquo;</strong>
+  list on their own phone, the last 25 players, with their cat names and cats, so they can send a
+  friend request. So the people you played with keep your cat name in that list, and you keep theirs.
+  A friend request does nothing until it is accepted.
+</p>
+
+<h2 id="friends">Friends</h2>
+<p>
+  The friends list, friend requests, blocks and the messages between friends are run by
+  <strong>Unity</strong>, on the Unity account described above.
+</p>
+
+<h3>Adding a friend</h3>
+<ul>
+  <li>You can add someone with their friend code, from the &ldquo;played with you&rdquo; list, or
+      from the results screen after a match.</li>
+  <li><strong>Nobody becomes your friend unless you accept.</strong> A request you ignore stays just
+      a request.</li>
+  <li>When you share your code, the game opens your phone's own share menu with a short message.
+      That message contains your friend code, or a web link with your code in it. <strong>It never
+      contains your cat name.</strong></li>
+  <li>So that a code on its own (or a link) can find you, our server keeps one record matching your
+      friend code to your Unity account number. Looking a code up needs the game, and each copy of the
+      game can only look up a limited number of codes an hour, so codes cannot be guessed in bulk.</li>
+</ul>
+
+<h3>What your friends see</h3>
+<p>
+  While the game is open, it tells Unity what you are doing, and Unity passes that on
+  <strong>to your friends only</strong>: whether you are online, on the menus or in a match (and which
+  kind of match), your cat name, your cat, your level, and when you were last seen. Their game also
+  receives your time-zone offset from UTC, which it does not show.
+</p>
+
+<h3>Messages between friends</h3>
+<p>
+  <strong>There is no typed chat.</strong> Friends can send each other one of eight fixed phrases
+  &mdash; LET'S PLAY!, GOOD GAME!, ONE MORE?, WAIT FOR ME, NICE!, SORRY!, THANKS! and BRB &mdash;
+  and invitations to play together. Only the number of the phrase travels, never words, so nothing
+  else can appear on anybody's screen. Only friends can send them.
+</p>
+<p>
+  You can remove a friend or <strong>block</strong> anyone. Blocking removes the friendship and stops
+  every request, invitation and phrase from that player.
+</p>
+
+<h2 id="alerts">Friend alerts (Android)</h2>
+<p>
+  On Android, the game can show a notification when a friend comes online:
+  &ldquo;Maya is online &middot; Tap to play together&rdquo;. It works like this.
+</p>
+<ul>
+  <li>When the game opens, it gets a <strong>notification address</strong> for this copy of the game on
+      this phone from <strong>Google's Firebase Cloud Messaging</strong>, the service Android uses to
+      deliver notifications. It sends that address to our server with your Unity account number, your
+      phone's time-zone setting (such as Europe/London), and whether alerts are switched on. This
+      happens on every Android phone, and it also happens when alerts are switched off, so that the
+      server knows not to send any.</li>
+  <li>When you open the game, our server asks Unity who your friends are. It does not keep that list.
+      It sends each friend who does not have the game open a small message that contains only your
+      Unity account number. <strong>Your name never passes through our server:</strong> your friend's
+      phone shows the name it already knows for you from the friends list.</li>
+  <li>A friend is told about you <strong>at most once every three hours</strong>, and <strong>never
+      between 10 at night and 8 in the morning</strong> in their own time zone. That is what the
+      time-zone setting is for.</li>
+  <li>To make that work, the server keeps: up to three notification addresses per player, the time
+      zone, whether alerts are on, when the game was last open, and, for each pair of friends, when the
+      last alert was sent.</li>
+</ul>
+<p>
+  To stop alerts, switch off <strong>ALERTS</strong> on the friends screen in the game, or turn off
+  notifications for Meowtropolis in your phone's settings. On Android 13 and later the game asks for
+  permission to show notifications when you make a friend, or when you switch ALERTS back on
+  &mdash; never when the game first opens. If you say no, no alert is shown. There are no friend
+  alerts on iPhone yet.
 </p>
 
 <h2>Signing in with Google Play Games</h2>
@@ -402,8 +503,11 @@
 <ul>
   <li>Your progress: coins, the cats and skills you own, your records, your rank, your settings.</li>
   <li>Your purchase receipts.</li>
-  <li>Reminders. If you allow notifications, they are scheduled by your phone itself &mdash; nothing
-      is sent to us or to anyone else in order to send them.</li>
+  <li>Your &ldquo;played with you&rdquo; list, the friend requests you have sent, and the names of your
+      friends that your phone remembers so a friend alert can say who is online.</li>
+  <li>Reminders. If you allow notifications, the daily reminders are scheduled by your phone itself
+      &mdash; nothing is sent to us or to anyone else in order to send them. (Friend alerts are
+      different; they are explained <a href="#alerts">above</a>.)</li>
 </ul>
 <p>All of it is deleted when you uninstall the game.</p>
 
@@ -411,11 +515,13 @@
 <p>
   Match results, leaderboard rows, names and usage records are stored in a small Google Firebase
   database in <strong>Europe (Belgium)</strong>, reached through a program written for this game
-  alone.
+  alone. The friend-alert records and the friend-code records are kept apart from those, in a second
+  database of their own, also in <strong>Europe</strong>, reached through a second program written for
+  this game.
 </p>
 <ul>
-  <li><strong>Only Ben can read it</strong>, through his own Google account. No other app and no other
-      person has access to the database, and the game itself has no key to it.</li>
+  <li><strong>Only Ben can read them</strong>, through his own Google account. No other app and no other
+      person has access to the databases, and the game itself has no key to them.</li>
   <li>The usage records cannot be read over the internet at all. There is deliberately no way to
       request them; that ability was never built.</li>
   <li>Leaderboard rows are meant to be seen: names, cats and scores are shown to other players inside
@@ -424,8 +530,9 @@
 </ul>
 <p>
   Two other companies are unavoidably involved, each under their own privacy policy: <strong>Google</strong>
-  (which hosts the database, runs Play Games sign-in and takes the payments) and <strong>Unity</strong>
-  (which provides the anonymous account and the 1&nbsp;v&nbsp;1 connection). You can read
+  (which hosts the databases, runs Play Games sign-in, takes the payments and delivers friend alerts
+  on Android) and <strong>Unity</strong> (which provides the game's account, the connection for live
+  matches, and the friends list, friend status and messages between friends). You can read
   <a href="https://policies.google.com/privacy">Google's privacy policy</a> and
   <a href="https://unity.com/legal/game-player-and-app-user-privacy-policy">Unity's player privacy policy</a>.
   As with any internet connection, their systems see your device's internet address when your phone
@@ -443,6 +550,11 @@
   <li>Your leaderboard row and your duel row are single rows that are rewritten each time you play,
       not a history.</li>
   <li>The usage records build up, and stay until they are deleted by hand.</li>
+  <li>The friend-alert record keeps at most three notification addresses per player; an address that
+      Google reports as no longer working is removed. The rest of it, the record of when each pair of
+      friends was last alerted, and your friend-code record stay until they are deleted by hand.</li>
+  <li>Your friends list stays with Unity until you remove a friend. How long Unity keeps its own
+      records is set by Unity.</li>
 </ul>
 <p>
   So: your data stays until you ask for it to be deleted, or until it is cleared out. If that changes,
@@ -454,11 +566,16 @@
   Meowtropolis is a cat game and children play it. It was built with that in mind:
 </p>
 <ul>
-  <li><strong>There is no chat.</strong> Players cannot send each other any text, ever.</li>
-  <li><strong>There is no way to be contacted.</strong> Players cannot find or message each other
-      outside a match.</li>
+  <li><strong>There is no typed chat.</strong> Players cannot send each other any text they wrote,
+      ever. Friends can send only eight fixed phrases, such as GOOD GAME!.</li>
+  <li><strong>Only friends can reach you, and only after you accept them.</strong> Someone you played
+      with can send a friend request; it does nothing unless it is accepted. Friends can see when you
+      are online and invite you to play. You can block anyone.</li>
   <li><strong>Nothing personal is asked for.</strong> No name, no age, no email, no location.</li>
   <li>Names are filtered for rude and hateful words before they can appear on anybody else's screen.</li>
+  <li>Friend links and shared friend codes never contain the child's cat name.</li>
+  <li>Friend alerts are never sent between 10 at night and 8 in the morning, and they can be switched
+      off in the game.</li>
 </ul>
 <p>
   The one thing parents should know is that the game <strong>sells coins for real money</strong>,
@@ -477,18 +594,26 @@
   the name shown on your profile screen in the game &mdash; and say you want your data deleted.
 </p>
 <p>
-  Your name is what lets us find your rows, so please copy it exactly. We will delete your
-  leaderboard rows, your duel row, your stored match recordings, your claimed name and your usage
-  records. It will normally be done within 30 days, and you will get a reply saying it is done.
+  Your name is what lets us find your rows, so please copy it exactly. If you have used Friends,
+  please also send your <strong>friend code</strong> from the friends screen; that is what lets us
+  find your friend-alert and friend-code records. We will delete your leaderboard rows, your duel row,
+  your stored match recordings, your claimed name, your usage records, your friend-alert record and
+  your friend-code record. It will normally be done within 30 days, and you will get a reply saying it
+  is done.
+</p>
+<p>
+  You can remove friends and block players yourself at any time, inside the game.
 </p>
 <p>
   You can also delete everything on your side at any time by uninstalling the game, which removes the
-  save file, your progress and the random player number on your phone. That does not remove rows
-  already on the leaderboard &mdash; for those, write to us.
+  save file, your progress, the random player number and the &ldquo;played with you&rdquo; list on your
+  phone. That does not remove rows already on the leaderboard or your friend-alert record &mdash; for
+  those, write to us.
 </p>
 <p class="note">
   Google and Unity hold their own records under their own policies; requests about those go to them.
-  For anything you bought, Google Play holds the purchase history.
+  That includes the friends list, friend status and friend messages, which Unity holds. For anything
+  you bought, Google Play holds the purchase history.
 </p>
 
 <h2>Changes to this policy</h2>
