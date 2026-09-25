@@ -3,7 +3,9 @@
 Written 2026-09-02 by reading the code, not by assuming. **Updated 2026-09-25** for Friends, the
 friend-online push, the friend link, the live seated modes and two new analytics events, read against
 Meowtropolis main at **71c63f66** (2026-09-25 06:13). Every claim below names the file it came
-from, so it can be re-checked when the code changes. This is the evidence the privacy policy in
+from, so it can be re-checked when the code changes. **Sections 2.6, 10 (items 1 and 4) and 12 were
+brought level on 2026-09-25 with the analytics server deployed at 07:00 that day (Meowtropolis
+b310a915)**, read from that code and checked against the live function. This is the evidence the privacy policy in
 index.html is built on; if the code changes, change this file first and the policy second.
 
 Sources read (2026-09-02): Runtime/Meta/Analytics.cs, OnlineRuns.cs, OnlineBoards.cs, OnlineNames.cs,
@@ -140,8 +142,10 @@ routes). So one player can never learn another player id.
 
 ### 2.6 Analytics - POST /events
 
-Analytics.cs. Batched, written to a disk outbox first, sent at app open, match end and match quit;
-kept and retried if the send fails; bounded at 500 held events. Batch body is
+Analytics.cs. Batched, written to a disk outbox first, sent at app open, match end, match quit and
+after an online match's match_health; kept and retried if the send fails, **except** a batch the
+server refuses as malformed (HTTP 400), which the client discards and never resends (Analytics.Flush);
+bounded at 500 held events. Batch body is
 {playerId, events:[...]}. Every event carries t (unix seconds) and seq (a per-install counter).
 
 | Event | Fields |
@@ -153,12 +157,18 @@ kept and retried if the send fails; bounded at 500 held events. Batch body is
 | purchase | kind (cat, skill, level, coinpack), item id, price in coins, resulting balance, amount |
 | claim | kind (gift, mission, achievement), id, amount, resulting balance |
 | tutorial | which step was completed |
-| notification_open | which reminder was tapped - **see the bug in section 10** |
-| match_health (new 2026-09-20) | ONLINE-mode matches only, of 5 s or more (MatchHealth.cs): arena, live or bots, **device model, OS version, GPU name, RAM, CPU core count** (SystemInfo), frame-rate median and 5th percentile, network silences, reconnects, refereeing time, snapshot timing, seats, queue window, wire version, duration - **see the bug in section 10** |
-| item (new) | which belt item was used in a match and on which leg (MatchController.OnBeltUsed) - **see the bug in section 10** |
+| notification_open | which reminder was tapped: the deep-link slug the notification carried, as `target` (GameUi.cs). Refused by the server until 2026-09-25, stored since |
+| match_health (sent since 2026-09-20, **stored since 2026-09-25**) | ONLINE-mode matches only, of 5 s and 30 frames or more (MatchHealth.cs): arena, live or bots, **device model, OS version string, GPU name, RAM in MB, CPU core count** (SystemInfo.deviceModel, operatingSystem, graphicsDeviceName, systemMemorySize, processorCount), frame-rate median and 5th percentile (overall and while refereeing), network silences (count, worst, total), reconnects, refereeing time, whether the referee changed, snapshot counts and timing, stranded/alone/reached the whistle, seats, queue window, wire version, duration |
+| item (sent since 2026-09-05, **stored since 2026-09-25**) | which belt item was used in a match (`id`) and on which leg of the run (`leg`) (MatchController.cs:290, Prowl.Leg) |
 
 match_health's device fields describe a kind of handset: no device id, serial, IMEI or Android id is
-read (grep of Runtime/ for them still returns nothing).
+read (grep of Runtime/ for them still returns nothing). **The OS string includes the maker's firmware
+build number** (Android's SystemInfo.operatingSystem reads like "Android OS 13 / API-33
+(TP1A.220624.014/A725FXXU6FWB1)"): a version shared by every phone of that model on that firmware, not
+an identifier of one phone, but more specific than "Android 13", and the policy says so. The client's
+slug filter strips the spaces, brackets and slashes before sending (Analytics.EventBuilder.Str), so
+what is stored reads like "AndroidOS13API-33TP1A.220624.014A725FXXU6FWB1", "samsungSM-A725F",
+"AdrenoTM618".
 
 Stored in meowtropolis_events, one document per batch, auto-id, plus at.
 
@@ -167,8 +177,13 @@ over HTTP; it is read in the Firebase console behind Ben Google account.
 
 Strings are sanitised on the client to a slug alphabet before they are even built into JSON
 (Analytics.EventBuilder.Str), and re-validated field by field on the server against
-EVENT_STRING_FIELDS / EVENT_INT_FIELDS. **There is no free-text field anywhere in the analytics
-schema.**
+EVENT_STRING_FIELDS / EVENT_INT_FIELDS. device, os and gpu have their own server list (EVENT_DEVICE_FIELDS:
+96 characters of letters, digits, space and ._()/+,:;=?!#$%&*@[]{}|~^-); a value outside it drops that
+field, not the batch. **There is no free-text field anywhere in the analytics schema.**
+
+**Since 2026-09-25 an unknown event NAME is skipped, not refused** (handler.js EVENT_NAMES): it stores
+nothing and the rest of its batch is stored. Before that, one unknown name refused the whole batch,
+which the client then discarded (section 10, items 1 and 4).
 
 ### 2.7 What is downloaded from the server
 
@@ -499,7 +514,8 @@ control. So: code present, server routes and page not live.
 
 ## 10. Bugs found while reading (not privacy, but Ben should know)
 
-1. **notification_open events are silently thrown away, and they take the whole batch with them.**
+1. **FIXED 2026-09-25 (b310a915, deployed 07:00; see item 4 for the measurements).**
+   **notification_open events are silently thrown away, and they take the whole batch with them.**
    Analytics.NotificationOpen is live (called from GameUi.cs:4984), but the server EVENT_NAMES set
    in handler.js does not contain notification_open. An unknown name makes validateEvents refuse the
    batch with 400, and the client treats a 400 as "malformed, discard" - so every event batched
@@ -513,7 +529,17 @@ control. So: code present, server routes and page not live.
 3. **Billing.SandboxAllowedOnDevice is still true**, as its own comment says it must not be at
    release, alongside ProfileStore.TesterCoinGrant. Not a privacy matter; it is a release blocker
    sitting next to one. (Re-checked 2026-09-25: both still there, Billing.cs:36 and ProfileStore.cs:43.)
-4. **match_health and item events are refused too, the same way as bug 1** (found 2026-09-25).
+4. **FIXED 2026-09-25 (Meowtropolis b310a915, deployed 06:57-07:00 by agent 2 with Ben's go).**
+   Confirmed first against the LIVE function, not only the tree, with batches that could not be
+   stored: {app_open, t:-5} -> 400 "bad t" (the control: the validator runs and says why);
+   {match_health}, {item}, {notification_open} -> 400 "event 0 has an unknown name" each. After the
+   deploy: a valid match_end + match_health batch -> 200 {stored: 2}; {keylog} -> 200 {stored: 0,
+   skipped: 1}; the control unchanged. The server now stores the three events with their field
+   whitelists and SKIPS any unknown name instead of refusing the batch. Batches phones already
+   discarded are gone; the loss stopped at the deploy. The windows, from the client commits that
+   added each event: notification_open from 2026-09-02 (6c731442), item from 2026-09-05 (d1d0f907),
+   match_health from 2026-09-20 (e81e6197); any batch holding one of them in those windows was lost. The original finding, as written:
+   **match_health and item events are refused too, the same way as bug 1** (found 2026-09-25).
    Server/handler.js EVENT_NAMES is still the seven names of 2026-09-02 (control: 'app_open' matches);
    the last commit to Server/handler.js is 2026-09-02, and no commit on any branch adds match_health to
    Server/. match_health calls Flush() at once, so the batch it rides in - usually carrying that
@@ -596,7 +622,7 @@ processing data for the game, which Play does not count as "sharing"; that assum
 | Messages -> Other in-app messages | The eight fixed quick phrases and invites, relayed by Unity Friends between friends | Optional (only if the player uses Friends) | App functionality. *Uncertain* whether Unity stores them or relays them ephemerally |
 | App activity -> App interactions | Analytics events (app open, match start/end/quit, claims, tutorial, reminder taps, items) and match results for boards and ghost runs | Required | Analytics, App functionality |
 | App activity -> Other actions | Friends list, requests, blocks and presence (online, mode, level, last seen), held by Unity | Required (presence is published for every signed-in player; only friends can read it) | App functionality |
-| App info and performance -> Diagnostics | match_health: device model, OS, GPU, RAM, cores, frame rate, network quality (ONLINE mode) | Required | Analytics. (Refused by the server today, bug 10.4; declare it anyway, since the client sends it) |
+| App info and performance -> Diagnostics | match_health: device model, OS version string (with the firmware build number), GPU name, RAM, cores, frame rate, network quality (ONLINE-mode matches of 5 s or more) | Required | Analytics. Stored since the 2026-09-25 deploy (b310a915) |
 
 The Play Console asks the same four questions for each type above, and the answers are the same for all:
 collected Yes; shared No; ephemeral No (except as noted); deletable on request Yes for everything on
