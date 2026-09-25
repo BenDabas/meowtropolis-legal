@@ -397,8 +397,10 @@ seen for each friend, so an offline friend's row is not a code (FriendsUgs.Apply
 
 ### 9.1 What the phone sends (FriendsPush.cs, MeowPush.java) - Android only
 
-Once per session, after the home screen and a UGS session, on **every Android phone** (not gated on
-having friends, and not gated on the ALERTS toggle):
+**Changed 2026-09-25 (Meowtropolis 7e205601, deployed 06:47): see 10.5.** Once per session, after the
+home screen and a UGS session, Android only. The token is registered **only while ALERTS is on and
+Friends lists at least one friend** (FriendsPush.ShouldRegister); "I'm online" is sent every session
+regardless, because it is the friends' alert, not this phone's:
 
 1. Firebase is initialised by hand from options in code (FriendsPush: app id, API key, project id
    memora-bf520, sender id) and FirebaseMessaging.getToken() mints the **FCM token**.
@@ -413,8 +415,11 @@ JWKS (issuer, project cb47c491-..., expiry; ugs.js) and takes the caller's id fr
 field names a player. **No name and no text is sent.** FriendsPush's own summary: "The server gets a
 token, a time zone and a boolean."
 
-Switching ALERTS off re-registers with `alerts: false`; **the token stays stored** - the client never
-calls /push/unregister (grep of Runtime/ and Plugins/Android/ for "unregister": no match, while
+**Superseded by 7e205601:** switching ALERTS off now calls /push/forget, which deletes the whole
+record, and the server also deletes the record when any client registers with `alerts: false`. What
+follows was true of the code audited at 71c63f66: switching ALERTS off re-registered with
+`alerts: false`; **the token stayed stored** - the client never
+called /push/unregister (grep of Runtime/ and Plugins/Android/ for "unregister": no match, while
 "/push/register" matches FriendsPush.cs:389 as the control). Turning ALERTS off stops
 this phone *receiving* alerts; it does not stop /push/online from alerting this player's friends.
 
@@ -427,7 +432,12 @@ backup never sweeps it). Location **eur3** (Europe multi-region) per FRIENDS-PUS
 the code does not state it; the function itself runs in europe-west1 (index.js).
 
 - `push_players/{ugsId}`: `tokens` (at most **3**, newest wins, each `{t, at, platform}`), `tz`,
-  `alerts`, `lastSeen`, `lastOnlineCall`.
+  `alerts`, `lastSeen`, `lastOnlineCall`. **From 7e205601:** `tokens`, `tz`, `lastSeen` only, and the
+  record exists only while ALERTS is on and there is a friend. /push/heartbeat and /push/online update
+  an existing record and never create one (store.js touchPlayer), verified live on the deployed
+  function: a heartbeat and an "online" from a player with no record left none (Firestore read 404).
+- `push_rate/{ugsId}`: `at`, the 10-minute announce limit (new in 7e205601; it used to be
+  `lastOnlineCall` on the player record, which is why "online" created records).
 - `push_pairs/{to}_{from}`: `lastSent`. **This is a record of which pairs of UGS ids have alerted each
   other**, so it does reveal that two ids are friends, even though the friend list itself is never
   stored (handler.js: friendsOf is fetched from UGS per call and not kept).
@@ -447,7 +457,16 @@ by FriendsPush.RememberName from the friends list, which skips codes and "A FRIE
 243ea787). An unknown id reads "A friend is online". Precisely: the name reaches the phone through
 **Unity presence** (8.2), not through the push server.
 
-**Retention, the honest answer:** no TTL, no expiry, no deletion code. FCM tokens that FCM reports as
+**Retention from 7e205601 (deployed and checked live 2026-09-25 06:47-06:52 local):**
+- The push record is deleted by /push/forget (ALERTS off), by a register with `alerts: false`, and by
+  the daily scheduled function `pushExpiry` once `lastSeen` is older than **60 days**.
+- `push_pairs` and `push_rate` rows are deleted by the same function once older than **1 day**.
+- Live check: a planted `push_rate` row with `at: 1` was deleted by one run, which logged
+  `push expiry: {"players":0,"pairs":0,"rates":1}`, and the row read 404 after.
+- The friend codes and lookup counters (9.3) are not covered: they are still kept until deleted by
+  hand.
+
+**Retention as audited at 71c63f66 (superseded):** no TTL, no expiry, no deletion code. FCM tokens that FCM reports as
 unregistered or invalid are removed (removeTokens); the fourth phone pushes out the oldest token.
 Everything else - the player doc, the pair docs, the friend codes (9.3) and the lookup counters - is
 kept until deleted by hand.
@@ -504,7 +523,9 @@ control. So: code present, server routes and page not live.
    deployed function was not probed; adding the names to EVENT_NAMES (and their fields to the
    whitelists) plus a redeploy fixes it. Privacy note: the device fields are sent and refused, so today
    they are transmitted but not stored; once the server accepts them they are stored.
-5. **The push record outlives its purpose.** Every Android player gets a push_players doc whether or
+5. **Fixed in Meowtropolis 7e205601, deployed 2026-09-25 06:47:** registration only with ALERTS on
+   and a friend, deletion on ALERTS off, and a 60-day expiry (see 9.1 and 9.2). The original finding:
+   **The push record outlives its purpose.** Every Android player gets a push_players doc whether or
    not they have friends, the ALERTS toggle keeps the token, and no code ever deletes a doc (section
    9.2). Not a bug; a data-minimisation choice Ben may want: register only once there is a friend, and
    call /push/unregister when ALERTS goes off.
@@ -569,8 +590,8 @@ processing data for the game, which Play does not count as "sharing"; that assum
 |---|---|---|---|
 | Personal info -> Name | The cat name (a nickname; generated by default, may be typed). Uploaded with runs, duels and names; in Unity presence and lobbies | Required (a name is always assigned and uploaded) | App functionality |
 | Personal info -> User IDs | The random save-file id; the UGS player id; the friend code | Required | App functionality, Analytics, Account management |
-| Device or other IDs | The FCM token (Android only) | Required on Android (registered for every Android player, ALERTS on or off) | App functionality |
-| Location -> Approximate location | *Judgement call.* The IANA time-zone name (push) and the UTC offset (lobby, presence). Never coordinates, no location permission | Required | App functionality |
+| Device or other IDs | The FCM token (Android only) | **Optional** (from 7e205601: registered only while ALERTS is on and the player has a friend; deleted when ALERTS goes off, or after 60 days unused) | App functionality |
+| Location -> Approximate location | *Judgement call.* The IANA time-zone name (push; optional, stored only with the FCM token under the same rule) and the UTC offset (lobby, presence; required). Never coordinates, no location permission | Required (the UTC offset); the push time zone is optional | App functionality |
 | Financial info -> Purchase history | The purchase analytics event: coin pack id, coins granted, new balance; coin spends | Required | Analytics |
 | Messages -> Other in-app messages | The eight fixed quick phrases and invites, relayed by Unity Friends between friends | Optional (only if the player uses Friends) | App functionality. *Uncertain* whether Unity stores them or relays them ephemerally |
 | App activity -> App interactions | Analytics events (app open, match start/end/quit, claims, tutorial, reminder taps, items) and match results for boards and ghost runs | Required | Analytics, App functionality |
