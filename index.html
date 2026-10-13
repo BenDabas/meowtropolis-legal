@@ -204,18 +204,20 @@
 <header>
   <p class="kicker">Meowtropolis</p>
   <h1>Privacy Policy</h1>
-  <p class="dateline">In effect from 25 September 2026</p>
+  <p class="dateline">In effect from 13 October 2026</p>
 </header>
 
 <div class="summary">
   <h2>The short version</h2>
   <ul>
     <li>You never make an account, and the game never asks for your name, your email or your phone number.</li>
+    <li>The first time you open the game, it asks <strong>how old you are</strong>. That answer decides how your name is shown to other players: <strong>if you are under 13, other players see a nickname the game makes up for you</strong>, and only friends you have accepted see the name you chose.</li>
     <li>The game gives your save file a <strong>random number</strong> when you first open it. That number is how the leaderboard tells one player from another. It is not your phone, and it is not you.</li>
-    <li>You get a <strong>cat name</strong> such as SleepyBiscuit. You can change it. Other players can see it, so please do not put your real name in it.</li>
+    <li>You get a <strong>cat name</strong> such as SleepyBiscuit. You can change it. Other players can see it (or, if you are under 13, your friends can), so please do not put your real name in it.</li>
     <li>When you finish a match, the game sends the <strong>result</strong> of that match so it can appear on the leaderboard and so other people can play against a recording of your run.</li>
     <li>You can add <strong>friends</strong>. A friend sees when you are online and can invite you to play. There is <strong>no typed chat</strong>: friends can only send each other a few fixed phrases, such as GOOD GAME!. On Android, the game can tell you when a friend comes online.</li>
-    <li>There are <strong>no ads</strong> and <strong>no advertising companies</strong> in this game. Nothing you do here is sold, shared for marketing, or used to follow you around other apps.</li>
+    <li>On Android there are <strong>ads, but only videos you choose to watch</strong> for a reward, from <strong>Google AdMob</strong>. They are never personalised: every ad request tells Google to treat the player as a child, and the game cannot read your phone's advertising ID. There are no ads on iPhone. <a href="#ads">How the ads work</a>.</li>
+    <li>Nothing you do here is sold, shared for marketing, or used to follow you around other apps.</li>
     <li>You can <strong>delete your account</strong> and everything our servers hold about it: in the game (Settings &rarr; YOUR ACCOUNT &rarr; DELETE ACCOUNT), or on <a href="delete.html">this page</a> if you no longer have the game. It happens 7 days after you ask, so it can be undone if you change your mind.</li>
   </ul>
 </div>
@@ -233,13 +235,13 @@
   <p>This is not a promise about how we behave. These things simply are not in the game &mdash; there is no code anywhere that asks for them.</p>
   <ul>
     <li><strong>No name, email address or phone number.</strong> There is no sign-up form and no login screen.</li>
-    <li><strong>No advertising ID and no hardware ID.</strong> Nothing lets anyone follow you into another app. (On Android, friend alerts need an address that lets a notification reach this game on your phone. That is explained <a href="#alerts">below</a>.)</li>
-    <li><strong>No location.</strong> The game has no permission to know where you are and never asks for it. It does read your phone's time-zone setting; <a href="#timezone">here is why</a>.</li>
+    <li><strong>No advertising ID and no hardware ID.</strong> The permission that lets an app read the advertising ID is removed from the game when it is built, so neither the game nor Google's ad library inside it can read it. Nothing lets anyone follow you into another company's app. (On Android, friend alerts need an address that lets a notification reach this game on your phone, explained <a href="#alerts">below</a>; and Google's ad library uses an &ldquo;app set ID&rdquo;, explained <a href="#ads">below</a>.)</li>
+    <li><strong>No location.</strong> The game has no permission to know where you are and never asks for it. It does read which <strong>country</strong> your phone is set to and its <strong>time-zone</strong> setting; <a href="#timezone">here is why</a>.</li>
     <li><strong>No contacts, photos, camera, microphone or files.</strong> Your friends in the game are people you added inside the game, not your phone's contacts.</li>
-    <li><strong>No ads, and no advertising or tracking companies at all.</strong> There is no ad network, no attribution service and no outside analytics service in the game.</li>
+    <li><strong>No personalised ads and no tracking companies.</strong> The only ads are the reward videos from Google AdMob that you choose to watch, and every request for one is marked as coming from a child. There is no attribution service and no outside analytics service in the game, and Unity's own hardware statistics and engine diagnostics are switched off.</li>
     <li><strong>No typed chat.</strong> Players cannot write text to each other. Friends can send one of eight fixed phrases, and nothing else.</li>
     <li><strong>No card numbers or payment details.</strong> If you buy coins, Google handles the payment. The game never sees the card.</li>
-    <li><strong>No age or date of birth.</strong> The game never asks.</li>
+    <li><strong>No birthday.</strong> The game asks how old you are once, and uses the answer only to decide how your name is shown to other players (see <a href="#age">your age</a>).</li>
   </ul>
 </div>
 
@@ -273,17 +275,30 @@
   never shown to anyone.
 </p>
 
+<h3 id="age">Your age</h3>
+<p>
+  The first time you open Meowtropolis, it asks how old you are. The game asks this for one reason:
+  to decide how your name is shown to other players (below). The answer does not change which ads you
+  can see &mdash; every ad request is treated as coming from a child, whatever age is given (see
+  <a href="#ads">Ads</a>).
+</p>
+
 <h3>Your cat name</h3>
 <p>
   The game gives you a two-word cat name from a fixed list of cat words &mdash; SleepyBiscuit,
   GrumpyWaffle, and so on. You can roll a new one, or type your own instead.
 </p>
 <p>
-  <strong>Your name is public inside the game.</strong> It is printed next to your score on the
-  leaderboards, it is shown to other players when they meet a recording of one of your runs, it is
-  shown to the people you play live matches with, and your friends see it on their friends list.
-  Please treat it as something the world can read, and do not type your real name, your school, or
-  anything you would not want a stranger to see.
+  <strong>If you are 13 or older, your name is public inside the game.</strong> It is printed next to
+  your score on the leaderboards, it is shown to other players when they meet a recording of one of
+  your runs, it is shown to the people you play live matches with, and your friends see it on their
+  friends list. Please treat it as something the world can read, and do not type your real name, your
+  school, or anything you would not want a stranger to see.
+</p>
+<p>
+  <strong>If you are under 13, other players never see the name you chose.</strong> Everywhere this
+  page says other players see your cat name &mdash; leaderboards, recordings of your runs, live
+  matches, friend requests &mdash; they see a nickname the game makes up for you instead. Only friends you have accepted see the name you chose.
 </p>
 <p>
   A typed name has to be 3 to 14 letters or digits, with no spaces or symbols, and it is checked
@@ -328,13 +343,23 @@
   and the numbers on their row.
 </p>
 
-<h3>How the game is used</h3>
+<h3 id="usage">How the game is used</h3>
 <p>
   Meowtropolis records what happens in the game itself, so it can be made better: which maps people
   stop choosing, which skills nobody buys, where in the tutorial people give up. These records carry
-  your player number, and nothing else about you. There is no free text of any kind in them. They
-  are:
+  your player number and, once the game has connected to Unity, your Unity account number (see
+  <a href="#live">below</a>), so that a reinstall or a new phone counts as the same player. There is
+  no free text of any kind in them.
 </p>
+<p>
+  Each batch of records also describes the copy of the game that sent it: the game's version, Android
+  or iPhone, whether it was installed from Google Play, the <strong>country the phone is set to</strong>
+  (taken from the SIM card, the mobile network or the phone's language setting &mdash; never a
+  position), the phone's language, its model name, how much memory it has, how many hours ahead of or
+  behind UTC it is, and when the game was first opened on it. This is so the numbers from real
+  players can be told apart from our own test phones, and read by country and by kind of phone.
+</p>
+<p>The records themselves are:</p>
 <div class="table-scroll">
 <table>
   <thead>
@@ -342,7 +367,7 @@
   </thead>
   <tbody>
     <tr><td>You open the game</td><td>the version of the game, how many matches you have played, how many coins you have</td></tr>
-    <tr><td>A match starts</td><td>the map, the cat, the skills you equipped, and whether it is an online match or a bot match</td></tr>
+    <tr><td>A match starts</td><td>the map, the cat, the skills you equipped, the skin, effect and accessories your cat is wearing, and whether it is an online match or a bot match</td></tr>
     <tr><td>A match ends</td><td>the map, the cat, the skills, your final size, your tier, your place, how many rivals, how many cats you ate, coins and stars earned, how many seconds it lasted, and how it ended</td></tr>
     <tr><td>You quit mid&#8209;match</td><td>the map, the cat, your size and how many seconds in you left</td></tr>
     <tr><td>You spend coins</td><td>what you bought (a cat, a skill, a skill level) and how many coins you had afterwards</td></tr>
@@ -350,16 +375,31 @@
     <tr><td>Tutorial</td><td>which tutorial step you finished</td></tr>
     <tr><td>You tap a reminder</td><td>which reminder it was</td></tr>
     <tr><td>You use an item in a match</td><td>which item, and on which match of a solo run you used it</td></tr>
+    <tr><td>You change what your cat wears</td><td>which skin, effect or accessory, on which cat, and whether you put it on or took it off</td></tr>
+    <tr><td>You move around the game</td><td>which screen you opened; and when you leave the game, how many seconds it was open, the last screen and how many matches you played</td></tr>
+    <tr><td>You go up a level</td><td>your new level</td></tr>
+    <tr><td>You buy with real money</td><td>which pack it was and what it gave you &mdash; never a receipt or a payment detail</td></tr>
+    <tr><td>The game asks for a store review, or offers an update</td><td>that it asked or offered, and what happened</td></tr>
     <tr><td>An online match ends</td><td>what kind of phone it ran on (the model name, the system version including the phone maker's build number, the graphics chip, the amount of memory and the number of processor cores), how smoothly the match ran and how steady the connection was. Only for online matches that lasted at least a few seconds</td></tr>
   </tbody>
 </table>
 </div>
 <p class="note">
-  Times are recorded only to the nearest whole second, and nothing here records where you are, what
-  else is on your phone, or anything you typed. The phone details describe the kind of phone, so we
+  Times are recorded only to the nearest whole second, and nothing here records where you are (beyond
+  the country the phone is set to), what else is on your phone, or anything you typed. The phone details describe the kind of phone, so we
   can tell which phones the game runs badly on. They contain no serial number and no device ID. The
   build number is the version of the phone's software, the same on every phone of that model that has
   the same update; it does not identify your phone.
+</p>
+
+<h3>Your coins and what you own</h3>
+<p>
+  So that coins cannot simply be made up by a changed copy of the game, <strong>our server keeps the
+  count</strong>. After matches, gifts, videos and purchases, the game sends what you earned, spent and
+  unlocked, and the server keeps your coins, fish, levels and everything you own, under your Unity
+  account number (see <a href="#live">below</a>), together with your player number, a random number for
+  each phone you play on, and the times of your recent matches, so it can check that the numbers are
+  possible. The count on your phone is a copy of the server's.
 </p>
 
 <h2 id="live">Playing live against other people</h2>
@@ -371,7 +411,8 @@
 <p>
   Unity also gives every copy of the game an account of its own when the game starts, so that its
   services will answer. It has no name, email or phone number on it. It has a number, and it holds
-  your friend code and your friends list (see <a href="#friends">Friends</a>).
+  your friend code, your friends list (see <a href="#friends">Friends</a>) and a copy of your save, so
+  your progress can come back if you sign in on a new phone.
 </p>
 <p>
   What the phones in a match tell each other is: your cat name, which cat you are wearing, your skills
@@ -384,7 +425,9 @@
 <p id="timezone">
   To find players who are near you first, a waiting room shows other phones looking for a match how
   many hours ahead of or behind UTC the phone that opened it is &mdash; for example, &ldquo;three hours
-  ahead&rdquo;. That is the time-zone setting on the phone, never your position.
+  ahead&rdquo;. That is the time-zone setting on the phone, never your position. The country the
+  phone is set to is used only in the usage records described <a href="#usage">above</a>, so the
+  numbers can be read country by country; it is never shown to other players.
 </p>
 <p>
   After a live match, each player's game keeps a short <strong>&ldquo;played with you&rdquo;</strong>
@@ -416,6 +459,13 @@
       card&rdquo; with just those three things. Only your friends and players you have sent a request to
       can read it &mdash; our server asks Unity who they are each time &mdash; and nobody else can look it
       up. Your friends' phones may also use it to show your name while you are offline.</li>
+  <li><strong>Invited by a friend.</strong> If you came to the game through a friend's link or typed a
+      friend's code, you and that friend each get a gift after your first finished match. When a friend's
+      link sent you to Google Play to install the game, Google Play keeps the friend code from the link;
+      in your first days the game asks Google Play, on your phone, for that note (the &ldquo;install
+      referrer&rdquo;) and uses only the friend code in it. Our server then records that you were invited
+      by that friend &mdash; the two Unity account numbers and the time, no names &mdash; so the gift is
+      paid once.</li>
 </ul>
 
 <h3>What your friends see</h3>
@@ -472,6 +522,61 @@
   alerts on iPhone yet.
 </p>
 
+<h2 id="ads">Ads (Android)</h2>
+<p>
+  On Android, Meowtropolis has <strong>reward videos</strong>: a short ad you choose to watch in return
+  for something in the game. There are no other ads &mdash; no banners, no ads that open by themselves,
+  never an ad during a match and never one when the game starts. A video plays only when you press its
+  button, in one of three places:
+</p>
+<ul>
+  <li>the <strong>free gift</strong>, in the store and behind the video button on the home screen
+      (a few a day);</li>
+  <li><strong>double the coins</strong> a match paid, on the results screen;</li>
+  <li><strong>double the daily gift</strong>.</li>
+</ul>
+<p>
+  The videos come from <strong>Google AdMob</strong>, Google's ad service. There are no ads on iPhone.
+</p>
+
+<h3>Never personalised</h3>
+<p>
+  Every request the game makes for a video tells Google to treat the player as a child and as under
+  the age of consent, asks only for ads rated <strong>G</strong> (suitable for everyone), and switches
+  personalised ads off. That is the same for every player, whatever age they gave. With these settings
+  Google does not pick ads from what it knows about you and does not follow you with ads from other
+  apps or websites. The permission that lets an app read the phone's advertising ID is removed from the
+  game when it is built, so the ad library cannot read it.
+</p>
+
+<h3>What Google's ad library collects</h3>
+<p>
+  The ad library is Google's own code running inside the game. To fetch, show and count videos, and to
+  stop fraud, it sends Google: your phone's <strong>internet (IP) address</strong>; <strong>what
+  happened with each ad</strong> (loaded, shown, finished, tapped); <strong>diagnostic information</strong>
+  about how the ad library is running; and an <strong>app set ID</strong> &mdash; a number Android gives
+  to the apps of one developer on one phone, which cannot be used to follow you into other companies'
+  apps. On most phones the game loads one video in the background once the home screen appears, so it
+  is ready when you press; that loading already sends Google these things, even if you never watch.
+  Google handles this under
+  <a href="https://policies.google.com/technologies/partner-sites">its rules for apps that use its
+  services</a> and <a href="https://policies.google.com/privacy">Google's privacy policy</a>.
+</p>
+
+<h3>Checking that a video was watched</h3>
+<p>
+  So that a changed copy of the game cannot collect rewards for videos it never played, when a video
+  starts the game gives Google two things to pass on to our server: your <strong>Unity account
+  number</strong> and a <strong>random code used for that one video</strong>. When you earn the
+  reward, Google sends both to our server in a message only Google can sign, and the server pays the
+  reward only for a video Google has confirmed. Each confirmation is kept for 30 days, then deleted.
+</p>
+<p class="note">
+  Tapping an ad can open a web page or a store page outside the game. The ads are made by other
+  companies and chosen by Google; if you ever see one that does not belong in a game children play,
+  please tell us.
+</p>
+
 <h2>Signing in with Google Play Games</h2>
 <p>
   On Android, the game quietly asks Google Play Games who you are when it starts. This exists so that
@@ -496,23 +601,26 @@
   payment detail &mdash; it only hears back from Google whether the purchase succeeded.
 </p>
 <p>
-  The receipt Google returns (the order number and purchase token) is stored <strong>only on your own
-  phone</strong>, so the coins can be given to you exactly once even if the app closes at the wrong
-  moment. It is not uploaded anywhere.
+  The receipt Google returns (the order number and purchase token) is kept on your phone until the
+  purchase is settled, and it is sent to <strong>our server, which asks Google whether the purchase is
+  real</strong> before giving you what you bought. The server keeps one record of each purchase &mdash;
+  a scrambled form of the purchase token, which pack it was, the order number and the time &mdash; so
+  that one purchase can never be paid out twice. It never holds a card, a name or any payment detail.
 </p>
 <p>
   So that a purchase can be recognised as yours if you change phone, the game gives Google a
   scrambled, one-way version of your player number. It cannot be turned back into anything.
 </p>
 <p>
-  The only thing that leaves your phone about a purchase is one line in the usage records above:
-  which coin pack, how many coins, and your new balance. No price, no receipt, no payment details.
+  Apart from that check, what leaves your phone about a purchase is the line in the usage records
+  above: which pack, what it gave you, and your new balance. No price and no payment details.
 </p>
 
 <h2>What stays on your phone and never leaves</h2>
 <ul>
   <li>Your progress: coins, the cats and skills you own, your records, your rank, your settings.</li>
-  <li>Your purchase receipts.</li>
+  <li>Your purchase receipts (each is also sent once to our server to be checked, as described
+      above).</li>
   <li>Your &ldquo;played with you&rdquo; list, the friend requests you have sent, and the names of your
       friends that your phone remembers so a friend alert can say who is online. Your phone also keeps a
       copy of the player cards (cat name, cat, level) of your friends and of the players who sent you a
@@ -527,9 +635,10 @@
 <p>
   Match results, leaderboard rows, names and usage records are stored in a small Google Firebase
   database in <strong>Europe (Belgium)</strong>, reached through a program written for this game
-  alone. The friend-alert records and the friend-code records are kept apart from those, in a second
-  database of their own, also in <strong>Europe</strong>, reached through a second program written for
-  this game.
+  alone. The friend-alert records, the friend-code records and player cards, your coins and what you
+  own, the purchase checks, the invite gifts, the video confirmations and deletion requests are kept
+  apart from those, in a second database of their own, also in <strong>Europe</strong>, reached through
+  a second program written for this game.
 </p>
 <ul>
   <li><strong>Only Ben can read them</strong>, through his own Google account. No other app and no other
@@ -538,17 +647,22 @@
       request them; that ability was never built.</li>
   <li>Leaderboard rows are meant to be seen: names, cats and scores are shown to other players inside
       the game. Player numbers are never shown to anyone.</li>
-  <li>Nothing is sold. Nothing is given to advertisers, data brokers or anybody else.</li>
+  <li>Nothing is sold. Our servers give nothing to advertisers, data brokers or anybody else. (What
+      Google's ad library collects by itself, on your phone, is described under <a href="#ads">Ads</a>.)</li>
 </ul>
 <p>
   Two other companies are unavoidably involved, each under their own privacy policy: <strong>Google</strong>
-  (which hosts the databases, runs Play Games sign-in, takes the payments and delivers friend alerts
-  on Android) and <strong>Unity</strong> (which provides the game's account, the connection for live
-  matches, and the friends list, friend status and messages between friends). You can read
+  (which hosts the databases and our servers, runs Play Games sign-in, takes the payments, delivers
+  friend alerts on Android, tells the game which friend's link it was installed from, and shows the
+  reward videos through AdMob) and <strong>Unity</strong> (which provides the game's account, the copy
+  of your save, the rooms and the connection for live matches, and the friends list, friend status and
+  messages between friends). You can read
   <a href="https://policies.google.com/privacy">Google's privacy policy</a> and
   <a href="https://unity.com/legal/game-player-and-app-user-privacy-policy">Unity's player privacy policy</a>.
   As with any internet connection, their systems see your device's internet address when your phone
-  talks to them; the game itself does not record or keep it.
+  talks to them; the game itself does not record or keep it. The Unity engine's own hardware statistics
+  and engine diagnostics are switched off, so the engine does not report on your phone to Unity by
+  itself.
 </p>
 
 <h2>How long it is kept</h2>
@@ -571,8 +685,16 @@
   <li>Your player card (cat name, cat, level) is refreshed each time you open the game and
       <strong>deleted automatically when the game has not been open for 30 days</strong>, or when you
       delete your account.</li>
-  <li>Your friends list stays with Unity until you remove a friend or delete your account. How long
-      Unity keeps its own records beyond that is set by Unity.</li>
+  <li>Your coins and what you own, and the record of a friend's invite, stay until you delete your
+      account.</li>
+  <li>The confirmation that a reward video was watched is <strong>deleted after 30 days</strong>, or
+      when you delete your account.</li>
+  <li>The record of each real-money purchase (a scrambled purchase token, the pack, the order number and
+      the time) is kept for good, because it is what stops one purchase being paid out twice. When you
+      delete your account, everything linking it to you is removed from it.</li>
+  <li>Your friends list and the copy of your save stay with Unity until you remove a friend or delete
+      your account. How long Unity keeps its own records beyond that is set by Unity.</li>
+  <li>What Google's ad library sends Google is kept by Google, under Google's own policies.</li>
   <li><strong>When you delete your account</strong>, all of the above is deleted 7 days after you
       ask (see <a href="#delete">below</a>). A request to delete from the web page that does not match
       any account is kept for up to 30 days so we can answer it, then deleted.</li>
@@ -582,32 +704,75 @@
   If that changes, this page will say so.
 </p>
 
-<h2>Children</h2>
+<h2 id="children">Children, and a note for parents</h2>
 <p>
-  Meowtropolis is a cat game and children play it. It was built with that in mind:
+  Meowtropolis is a cat game for everyone, and children play it. It was built with that in mind, and
+  this section is written for parents.
 </p>
+
+<h3>What the game collects from a child</h3>
+<p>
+  The same as from any other player, as described on this page, and nothing more: the random player
+  number and the Unity account number; the age answer; a cat name; the results of matches; your
+  child's coins and what they own; the usage records (which include the country the phone is set to
+  and the kind of phone); and, only if they are used, friends, friend alerts, invites and purchases.
+  The game never asks a child for a real name, an email address, a phone number, a photo, their voice
+  or their location, and there is no way to type a message to another player.
+</p>
+<p>
+  All of it is used only to run the game: to keep progress, run leaderboards and live matches, keep
+  friends lists, stop cheating, and learn which parts of the game work. None of it is sold, and none
+  of it is used for advertising.
+</p>
+
+<h3>Ads</h3>
 <ul>
+  <li>Only reward videos, on Android, and only when the child presses the button for one. Never in a
+      match and never by themselves.</li>
+  <li>Every ad request, for every player of every age, is marked as directed at children and under the
+      age of consent, and asks only for ads rated G. Google does not personalise these ads or use them
+      to follow anyone around other apps, and the game cannot read the advertising ID.</li>
+  <li>Google's ad library still receives the phone's internet address, what happened with the ad,
+      diagnostics and an app set ID, to show and count the ads (see <a href="#ads">Ads</a>).</li>
+</ul>
+
+<h3>How the game protects children</h3>
+<ul>
+  <li><strong>Under 13, the chosen name stays among friends.</strong> A player who says they are under
+      13 is shown to everyone else under a nickname the game makes up; only friends they have accepted
+      see the name they chose.</li>
   <li><strong>There is no typed chat.</strong> Players cannot send each other any text they wrote,
       ever. Friends can send only eight fixed phrases, such as GOOD GAME!.</li>
   <li><strong>Only friends can reach you, and only after you accept them.</strong> Someone you played
       with can send a friend request; it does nothing unless it is accepted. Friends can see when you
       are online and invite you to play. You can block anyone.</li>
-  <li><strong>Nothing personal is asked for.</strong> No name, no age, no email, no location.</li>
+  <li><strong>Nothing personal is asked for.</strong> No name, no email, no location &mdash; only how
+      old the player is, to decide how their name is shown.</li>
   <li>Names are filtered for rude and hateful words before they can appear on anybody else's screen.</li>
   <li>Friend links and shared friend codes never contain the child's cat name.</li>
   <li>Friend alerts are never sent between 10 at night and 8 in the morning, and they can be switched
       off in the game.</li>
 </ul>
 <p>
-  The one thing parents should know is that the game <strong>sells coins for real money</strong>,
+  Parents should also know that the game <strong>sells packs for real money</strong>,
   between roughly one and twenty US dollars. Please use your phone's or Google Play's parental
   controls and password protection if a child plays on your device.
 </p>
-<p>
-  The game does not ask anyone's age, so we cannot tell who is a child. If you are a parent and you
-  want everything connected to your child's game removed, use DELETE ACCOUNT in the game's Settings,
-  or <a href="delete.html">the deletion page</a>, or write to us. See below.
-</p>
+
+<h3>What parents can do</h3>
+<ul>
+  <li><strong>See what we hold.</strong> Write to
+      <a href="mailto:bendabas1@gmail.com">bendabas1@gmail.com</a> with your child's cat name and friend
+      code (the code is on the friends screen), and Ben will tell you what our servers hold about that
+      account.</li>
+  <li><strong>Have it deleted.</strong> Use DELETE ACCOUNT in the game's Settings,
+      <a href="delete.html">the deletion page</a>, or write to the same address. See
+      <a href="#delete">below</a> for exactly what goes.</li>
+  <li><strong>Stop any more being collected.</strong> Delete the account and uninstall the game; nothing
+      more is sent after that. Friend alerts can be switched off on their own with ALERTS on the friends
+      screen.</li>
+  <li><strong>Ask anything.</strong> The game is made by one person, and he answers these himself.</li>
+</ul>
 
 <h2 id="delete">How to delete your account and your data</h2>
 <p>
@@ -628,8 +793,10 @@
 <p>
   Deleting your account removes: your progress and coins (including bought coins) on the phone and in
   the cloud copy of your save; your leaderboard rows, your duel row, your stored match recordings and
-  your claimed name; your usage records; your friend-alert record and your friend code; your friends
-  list, friend requests and blocks; and your game account with Unity. Coins are not refunded.
+  your claimed name; your usage records; your friend-alert record, your friend code and your player
+  card; the server's count of your coins and what you own; your invite records; your reward-video
+  confirmations; your friends list, friend requests and blocks; and your game account with Unity. Coins
+  are not refunded.
 </p>
 <p>
   If you delete your account in the game, all of this goes at once when the 7 days are up (or when you
@@ -644,9 +811,11 @@
   What deleting your account does not remove: Google Play's record of anything you bought, and the
   Google Play Games link if you signed in with it (you can delete that at
   <a href="https://play.google.com/games/profile">play.google.com/games/profile</a>); routine request
-  logs kept by our hosting provider, which are deleted automatically within 30 days; and your cat name
-  in the &ldquo;played with you&rdquo; list on the phones of people you played live with, which we
-  cannot reach.
+  logs kept by our hosting provider, which are deleted automatically within 30 days; the record of each
+  real-money purchase, which stays with nothing left in it that points to you (the pack, the order
+  number, the time and a scrambled purchase token); what Google's ad library sent Google, which Google
+  keeps under its own policies; and your cat name in the &ldquo;played with you&rdquo; list on the
+  phones of people you played live with, which we cannot reach.
 </p>
 
 <h2>Changes to this policy</h2>
@@ -655,11 +824,11 @@
   released, and the date at the top will change. This page is the current version at all times.
 </p>
 <p>
-  That includes advertising. Everything on this page about ads describes Meowtropolis as it is
-  today: there is no ad network in the game and no advertising company receives anything. If that
-  ever changes, it will not change quietly &mdash; this page will say so before the version
-  containing ads is released, the date at the top will change, and what Google Play shows you about
-  this game's data will change with it.
+  That includes advertising. Earlier versions of this page said the game had no ads; this version
+  describes the reward videos <a href="#ads">above</a> and the age question. If the ads ever change &mdash; a new kind of ad, a new
+  ad company, or ads that are personalised for anyone &mdash; it will not change quietly: this page will
+  say so before that version is released, the date at the top will change, and what Google Play shows
+  you about this game's data will change with it.
 </p>
 
 <div class="contact">

@@ -712,3 +712,71 @@ Cloud Logging request logs (default retention 30 days, not checked on this proje
 (default) database (same project, so expected); that Unity's Friends and Cloud Save client REST routes
 accept DELETE with a player token as documented; that a deleted Unity account ends the Friends retention
 of its id as Unity's privacy page implies for the sweep path, where relationships cannot be removed first.
+
+## 14. Ads, the age question, the server wallet (re-checked 2026-10-14, for the 13 October policy)
+
+The 25 September policy said "no ads" and "the game never asks your age". Both stopped being true:
+rewarded videos from Google AdMob (Meowtropolis docs/ADS.md, sections 4-12) and, on 2026-10-13, one
+neutral age question (Meowtropolis 849b090bc). Ben ruled the game is for every age, so Google Play's
+Families policy and COPPA apply. Read from the Meowtropolis tree at 8864a0de0 (store bundle 0.3.15,
+version code 46 is the first one carrying the age question).
+
+**Ads (Android only).**
+
+- Every ad request is child-directed, under the age of consent, rated G, non-personalised, whatever
+  age the player gave: `Runtime/Meta/AdsGoogle.cs` lines 59-61 (`TagForChildDirectedTreatment.True`,
+  `TagForUnderAgeOfConsent.True`, `MaxAdContentRating.G`). So the age answer never changes the ads.
+- The advertising ID cannot be read: `Editor/AdsBuildSetup.cs` removes `com.google.android.gms.permission.AD_ID`
+  and the three `ACCESS_ADSERVICES_*` permissions from the launcher manifest after Gradle generation.
+  The Google library still uses an app set ID (per-developer, not per-advertiser), which the policy names.
+- Only rewarded videos the player chooses to start. No banners, no interstitials. No ads on iPhone
+  (the plugin's iOS files are switched off; `Ads.Supported` is false there).
+- The video reward proof (server-push/ads-ssv.js): Google calls our server with the player's UGS id
+  (set by the phone as AdMob's user id) and a random nonce; the proof is stored in
+  `meowtropolis_video_proofs` with `expireAt` 30 days on (`PROOF_KEEP_MS`). **Firestore's TTL policy on
+  `expireAt` was enabled 2026-10-14 00:2x** (gcloud firestore fields ttls update, database meowtropolis;
+  state CREATING at the time of writing, Google finishes it on its own). Account deletion erases the
+  proofs by `userId` (account-store.js `erasePush`). The switch is `off` until real AdMob ids exist,
+  so today nothing is written there by real players.
+- Unity's own collection is off: `ProjectSettings.asset` `submitAnalytics: 0` (hardware statistics)
+  and `UnityConnectSettings.asset` `m_EngineDiagnosticsEnabled: 0` (Meowtropolis 310d24861).
+  Note: Unity's build rewrites `UnityConnectSettings.asset` `m_Enabled`; it does not touch the two
+  fields above (checked in the 0.3.15 build's diff).
+
+**The age question.**
+
+- Asked once, on a neutral screen (no default age, no hint of the "right" answer):
+  `Runtime/UI/AgeGateScreen.cs`. Stored on the phone as a band only - under 13, or 13 and over
+  (`Runtime/Meta/PlayerAge.cs`, `ConsentAge = 13`); the number of years is not kept or sent.
+- Under 13: strangers never see the typed name. Enforced on the servers, not trusted to the phone:
+  - scores service (Server/handler.js 150-184): every write and every read replaces a child's typed
+    name with `aliasFor(playerId)` (a generated two-word name, Server/vocabulary.js); the first time an
+    id is known to be a child, every row it already has is renamed and its registry names released;
+    the mark is sticky (a later "13 or over" does not lift it). Stored in `meowtropolis_children`.
+  - push service (server-push/handler.js 124-128, 332-370): a child's player card carries the typed
+    name for accepted friends and the generated one for everyone else; a friend request's sender sees
+    only the generated one.
+- Accepted friends see the typed name (Ben's ruling 2026-10-13). This goes through Unity Friends
+  presence and our player cards, never a public board.
+- Account deletion erases the child mark and the mice-table row (Meowtropolis f9c497489,
+  account-store.js `eraseScores` `mice` and `child`).
+
+**The server wallet** (Meowtropolis docs/WALLET.md, live since 2026-10-04): coins, fish, levels and
+everything owned are kept in `meowtropolis_wallet/{ugsId}` with the save-file id, a random id per
+phone and recent match times; erased whole by account deletion (`erasePush` `wallet`). Purchase rows
+are anonymised, not deleted (the token hash is what stops a purchase being credited twice).
+
+**Analytics context.** Each event batch carries the game version, platform, store install flag,
+country as set on the phone (SIM, network or locale, never a position), language, model, memory,
+UTC offset and first-open time - so that test phones and real players can be told apart. The policy's
+"How the game is used" table lists the new events (wear, screens, level up, real-money pack, review
+and update prompts).
+
+**Not verified.** The under-13 path has not been played on a phone (it would mark Ben's shared
+test account as a child for good; it needs a phone with no account). A real AdMob callback has never
+arrived (test ids only, docs/ADS.md 12.5).
+
+**Data safety consequences.** Section 12's answers predate ads. The Play Console form was refilled on
+2026-10-13 with ten data types and the ads declaration set to Yes (saved, not submitted: Play will not
+submit it until the target-audience form is finished). Before submitting, check it declares "Device or
+other IDs" for the app set ID used by Google's ad library.
