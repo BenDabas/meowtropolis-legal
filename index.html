@@ -204,7 +204,7 @@
 <header>
   <p class="kicker">Meowtropolis</p>
   <h1>Privacy Policy</h1>
-  <p class="dateline">In effect from 13 October 2026</p>
+  <p class="dateline">In effect from 28 October 2026 (ads now depend on the age given; before that, 13 October 2026)</p>
 </header>
 
 <div class="summary">
@@ -216,7 +216,7 @@
     <li>You get a <strong>cat name</strong> such as SleepyBiscuit. You can change it. Other players can see it (or, if you are under 13, your friends can), so please do not put your real name in it.</li>
     <li>When you finish a match, the game sends the <strong>result</strong> of that match so it can appear on the leaderboard and so other people can play against a recording of your run.</li>
     <li>You can add <strong>friends</strong>. A friend sees when you are online and can invite you to play. There is <strong>no typed chat</strong>: friends can only send each other a few fixed phrases, such as GOOD GAME!. On Android, the game can tell you when a friend comes online.</li>
-    <li>On Android there are <strong>ads, but only videos you choose to watch</strong> for a reward, from <strong>Google AdMob</strong>. They are never personalised: every ad request tells Google to treat the player as a child, and the game cannot read your phone's advertising ID. There are no ads on iPhone. <a href="#ads">How the ads work</a>.</li>
+    <li>On Android there are <strong>ads, but only videos you choose to watch</strong> for a reward, from <strong>Google AdMob</strong>. <strong>Under 18 they are never personalised</strong>, and under 13 they are children's ads only. Only a player who says they are 18 or older can get personalised ads, and in Europe only if they agree. There are no ads on iPhone. <a href="#ads">How the ads work</a>.</li>
     <li>Nothing you do here is sold, shared for marketing, or used to follow you around other apps.</li>
     <li>You can <strong>delete your account</strong> and everything our servers hold about it: in the game (Settings &rarr; YOUR ACCOUNT &rarr; DELETE ACCOUNT), or on <a href="delete.html">this page</a> if you no longer have the game. It happens 7 days after you ask, so it can be undone if you change your mind.</li>
   </ul>
@@ -235,13 +235,13 @@
   <p>This is not a promise about how we behave. These things simply are not in the game &mdash; there is no code anywhere that asks for them.</p>
   <ul>
     <li><strong>No name, email address or phone number.</strong> There is no sign-up form and no login screen.</li>
-    <li><strong>No advertising ID and no hardware ID.</strong> The permission that lets an app read the advertising ID is removed from the game when it is built, so neither the game nor Google's ad library inside it can read it. Nothing lets anyone follow you into another company's app. (On Android, friend alerts need an address that lets a notification reach this game on your phone, explained <a href="#alerts">below</a>; and Google's ad library uses an &ldquo;app set ID&rdquo;, explained <a href="#ads">below</a>.)</li>
+    <li><strong>No hardware ID, and no advertising ID from anyone under 18.</strong> The game itself never reads the advertising ID. Google's ad library inside it may use it only for a player who said they are 18 or older (see <a href="#ads">Ads</a>); for everyone younger, every ad request is marked so that it is not used. Nothing in the game lets anyone follow a child into another company's app. (On Android, friend alerts need an address that lets a notification reach this game on your phone, explained <a href="#alerts">below</a>; and Google's ad library uses an &ldquo;app set ID&rdquo;, explained <a href="#ads">below</a>.)</li>
     <li><strong>No location.</strong> The game has no permission to know where you are and never asks for it. It does read which <strong>country</strong> your phone is set to and its <strong>time-zone</strong> setting; <a href="#timezone">here is why</a>.</li>
     <li><strong>No contacts, photos, camera, microphone or files.</strong> Your friends in the game are people you added inside the game, not your phone's contacts.</li>
-    <li><strong>No personalised ads and no tracking companies.</strong> The only ads are the reward videos from Google AdMob that you choose to watch, and every request for one is marked as coming from a child. There is no attribution service and no outside analytics service in the game, and Unity's own hardware statistics and engine diagnostics are switched off.</li>
+    <li><strong>No personalised ads for anyone under 18, and no tracking companies.</strong> The only ads are the reward videos from Google AdMob that you choose to watch. Every request for a player under 13 is marked as coming from a child, and every request for a player under 18 is marked as under the age of consent, with personalisation off. There is no attribution service and no outside analytics service in the game, and Unity's own hardware statistics and engine diagnostics are switched off.</li>
     <li><strong>No typed chat.</strong> Players cannot write text to each other. Friends can send one of eight fixed phrases, and nothing else.</li>
     <li><strong>No card numbers or payment details.</strong> If you buy coins, Google handles the payment. The game never sees the card.</li>
-    <li><strong>No birthday.</strong> The game asks how old you are once, and uses the answer only to decide how your name is shown to other players (see <a href="#age">your age</a>).</li>
+    <li><strong>No birthday.</strong> The game asks how old you are once, and uses the answer only to decide how your name is shown to other players and which kind of ads you can be shown (see <a href="#age">your age</a>).</li>
   </ul>
 </div>
 
@@ -277,10 +277,11 @@
 
 <h3 id="age">Your age</h3>
 <p>
-  The first time you open Meowtropolis, it asks how old you are. The game asks this for one reason:
-  to decide how your name is shown to other players (below). The answer does not change which ads you
-  can see &mdash; every ad request is treated as coming from a child, whatever age is given (see
-  <a href="#ads">Ads</a>).
+  The first time you open Meowtropolis, it asks how old you are, once. The game uses the answer for two
+  things: how your name is shown to other players (below), and which kind of ads you can be shown
+  &mdash; children's ads under 13, ordinary ads without personalisation from 13 to 17, and possibly
+  personalised ads from 18 (see <a href="#ads">Ads</a>). The game keeps only which of those groups you
+  are in, not the age itself.
 </p>
 
 <h3>Your cat name</h3>
@@ -539,14 +540,26 @@
   The videos come from <strong>Google AdMob</strong>, Google's ad service. There are no ads on iPhone.
 </p>
 
-<h3>Never personalised</h3>
+<h3>Which ads, by age</h3>
 <p>
-  Every request the game makes for a video tells Google to treat the player as a child and as under
-  the age of consent, asks only for ads rated <strong>G</strong> (suitable for everyone), and switches
-  personalised ads off. That is the same for every player, whatever age they gave. With these settings
-  Google does not pick ads from what it knows about you and does not follow you with ads from other
-  apps or websites. The permission that lets an app read the phone's advertising ID is removed from the
-  game when it is built, so the ad library cannot read it.
+  What the game asks Google for depends on the age given when the game first opened:
+</p>
+<ul>
+  <li><strong>Under 13</strong> (and anyone who has not answered yet): every request tells Google to
+      treat the player as a child and as under the age of consent, asks only for ads rated
+      <strong>G</strong> (suitable for everyone), and switches personalised ads off.</li>
+  <li><strong>13 to 17</strong> (and everyone who said 13 or older before 28 October 2026): ordinary
+      ads rated at most <strong>PG</strong>, still marked as under the age of consent, with
+      personalised ads switched off.</li>
+  <li><strong>18 or older</strong>: ads rated at most <strong>T</strong> (teen), which Google may
+      personalise. In the European Economic Area, the UK and Switzerland, Google first shows its own
+      consent message, and personalises only if you agree. Elsewhere you can turn personalised ads off
+      in your phone's settings (Google &rarr; Ads).</li>
+</ul>
+<p>
+  When ads are not personalised, Google does not pick them from what it knows about you and does not
+  follow you with ads from other apps or websites. For a player under 18, Google's ad library does not
+  use the phone's advertising ID.
 </p>
 
 <h3>What Google's ad library collects</h3>
@@ -556,7 +569,9 @@
   happened with each ad</strong> (loaded, shown, finished, tapped); <strong>diagnostic information</strong>
   about how the ad library is running; and an <strong>app set ID</strong> &mdash; a number Android gives
   to the apps of one developer on one phone, which cannot be used to follow you into other companies'
-  apps. On most phones the game loads one video in the background once the home screen appears, so it
+  apps. For a player who said they are 18 or older, it can also send the phone's <strong>advertising
+  ID</strong>, which is what lets Google personalise ads; you can reset it or delete it in your phone's
+  settings. On most phones the game loads one video in the background once the home screen appears, so it
   is ready when you press; that loading already sends Google these things, even if you never watch.
   Google handles this under
   <a href="https://policies.google.com/technologies/partner-sites">its rules for apps that use its
@@ -729,9 +744,11 @@
 <ul>
   <li>Only reward videos, on Android, and only when the child presses the button for one. Never in a
       match and never by themselves.</li>
-  <li>Every ad request, for every player of every age, is marked as directed at children and under the
-      age of consent, and asks only for ads rated G. Google does not personalise these ads or use them
-      to follow anyone around other apps, and the game cannot read the advertising ID.</li>
+  <li>A child who says they are under 13 gets only children's ads: every request is marked as directed
+      at children and under the age of consent, and asks only for ads rated G. Google does not
+      personalise these ads or use them to follow anyone around other apps.</li>
+  <li>From 13 to 17 the ads are ordinary ones rated at most PG, and still never personalised. Only a
+      player who says they are 18 or older can get personalised ads.</li>
   <li>Google's ad library still receives the phone's internet address, what happened with the ad,
       diagnostics and an app set ID, to show and count the ads (see <a href="#ads">Ads</a>).</li>
 </ul>
