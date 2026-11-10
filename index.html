@@ -204,7 +204,7 @@
 <header>
   <p class="kicker">Meowtropolis</p>
   <h1>Privacy Policy</h1>
-  <p class="dateline">In effect from 28 October 2026 (ads now depend on the age given; before that, 13 October 2026)</p>
+  <p class="dateline">In effect from version 0.3.47 (counting who opens the game, Android); before that, 28 October 2026 and 13 October 2026</p>
 </header>
 
 <div class="summary">
@@ -238,7 +238,7 @@
     <li><strong>No hardware ID, and no advertising ID from anyone under 18.</strong> The game itself never reads the advertising ID. Google's ad library inside it may use it only for a player who said they are 18 or older (see <a href="#ads">Ads</a>); for everyone younger, every ad request is marked so that it is not used. Nothing in the game lets anyone follow a child into another company's app. (On Android, friend alerts need an address that lets a notification reach this game on your phone, explained <a href="#alerts">below</a>; and Google's ad library uses an &ldquo;app set ID&rdquo;, explained <a href="#ads">below</a>.)</li>
     <li><strong>No location.</strong> The game has no permission to know where you are and never asks for it. It does read which <strong>country</strong> your phone is set to and its <strong>time-zone</strong> setting; <a href="#timezone">here is why</a>.</li>
     <li><strong>No contacts, photos, camera, microphone or files.</strong> Your friends in the game are people you added inside the game, not your phone's contacts.</li>
-    <li><strong>No personalised ads for anyone under 18, and no tracking companies.</strong> The only ads are the reward videos from Google AdMob that you choose to watch. Every request for a player under 13 is marked as coming from a child, and every request for a player under 18 is marked as under the age of consent, with personalisation off. There is no attribution service and no outside analytics service in the game, and Unity's own hardware statistics and engine diagnostics are switched off.</li>
+    <li><strong>No personalised ads for anyone under 18, and no tracking companies.</strong> The only ads are the reward videos from Google AdMob that you choose to watch. Every request for a player under 13 is marked as coming from a child, and every request for a player under 18 is marked as under the age of consent, with personalisation off. There is no attribution service in the game. The one outside analytics service is <a href="#first-open">Google Analytics for Firebase</a>, on Android, which counts that the game was opened and never reads the advertising ID. Unity's own hardware statistics and engine diagnostics are switched off.</li>
     <li><strong>No typed chat.</strong> Players cannot write text to each other. Friends can send one of eight fixed phrases, and nothing else.</li>
     <li><strong>No card numbers or payment details.</strong> If you buy coins, Google handles the payment. The game never sees the card.</li>
     <li><strong>No birthday.</strong> The game asks how old you are once, and uses the answer only to decide how your name is shown to other players and which kind of ads you can be shown (see <a href="#age">your age</a>).</li>
@@ -523,6 +523,29 @@
   alerts on iPhone yet.
 </p>
 
+<h2 id="first-open">Counting who opens the game (Android)</h2>
+<p>
+  From version 0.3.47 the Android game contains <strong>Google Analytics for Firebase</strong>, for one
+  purpose: to count that the game was opened, so that we know how many people who installed it from an
+  ad actually played, and so that Google shows our ads to people who play rather than to people who
+  only download. The game itself sends it nothing; Google's library measures by itself:
+</p>
+<ul>
+  <li>that the game was <strong>opened for the first time</strong>, and later when it is opened and
+      for how long it stays on screen;</li>
+  <li>a <strong>random number for this copy of the game</strong> (the &ldquo;app instance ID&rdquo;),
+      which is replaced if you delete the game or clear its data;</li>
+  <li>the phone model, the Android version, the language, the game's version, and the country or
+      region worked out from the internet address (the address itself is not kept by the game).</li>
+</ul>
+<p>
+  It is the same for every player, whatever age they give: <strong>it never collects the advertising
+  ID</strong> or the Android ID, and it is set so that nothing it measures is used to personalise ads.
+  Google keeps the detailed records for two months and the per-copy record for up to 14 months
+  after the game was last opened, as our service provider, under <a href="https://policies.google.com/privacy">Google's privacy policy</a>. Only Ben
+  can see the counts.
+</p>
+
 <h2 id="ads">Ads (Android)</h2>
 <p>
   On Android, Meowtropolis has <strong>reward videos</strong>: a short ad you choose to watch in return
@@ -668,7 +691,7 @@
 <p>
   Two other companies are unavoidably involved, each under their own privacy policy: <strong>Google</strong>
   (which hosts the databases and our servers, runs Play Games sign-in, takes the payments, delivers
-  friend alerts on Android, tells the game which friend's link it was installed from, and shows the
+  friend alerts on Android, counts who opens the game on Android, tells the game which friend's link it was installed from, and shows the
   reward videos through AdMob) and <strong>Unity</strong> (which provides the game's account, the copy
   of your save, the rooms and the connection for live matches, and the friends list, friend status and
   messages between friends). You can read
