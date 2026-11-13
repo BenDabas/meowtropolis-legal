@@ -386,7 +386,7 @@ server reads it back (the push uses the IANA zone from registration, section 9).
 ### 8.3 Messages - no free text, by construction
 
 Every message is an Envelope `{ k, i, id, m, l, t }` (FriendsUgs.Envelope):
-- `q`: a quick message, `i` indexes Friends.Quick - exactly eight fixed phrases: LET'S PLAY!, GOOD GAME!,
+- `q`: a quick message, `i` indexes Friends.Quick - fixed phrases (eight at first, twelve since HI!, HOW ARE YOU?, OK! and NOT NOW joined; Friends.cs, re-read 2026-11-13): LET'S PLAY!, GOOD GAME!,
   ONE MORE?, WAIT FOR ME, NICE!, SORRY!, THANKS!, BRB. The words never travel; a receiver drops an index
   it does not have.
 - `inv`, `ans`, `go`, `cxl`, `lv`, `pm`, `list`: invite, answer, "go" (carrying a 1v1 lobby join code in
@@ -639,7 +639,7 @@ processing data for the game, which Play does not count as "sharing"; that assum
   that as account creation (which would require a web deletion link); if it does, the deletion email
   below is the path.
 - Do you provide a way for users to request that their data be deleted? **Yes.** **From section 13, once
-  deployed:** in the app (Settings -> YOUR ACCOUNT -> DELETE ACCOUNT) and on the web at
+  deployed:** in the app (Settings -> DELETE ACCOUNT; the YOUR ACCOUNT step was portrait-era, corrected 2026-11-13) and on the web at
   https://bendabas.github.io/meowtropolis-legal/delete.html (form, or email). Before that deploy, the
   honest answer is email only.
 - **Account deletion (the Data deletion section of the form).** Play treats the Unity account plus the Play

@@ -217,8 +217,8 @@
     <li>When you finish a match, the game sends the <strong>result</strong> of that match so it can appear on the leaderboard and so other people can play against a recording of your run.</li>
     <li>You can add <strong>friends</strong>. A friend sees when you are online and can invite you to play. There is <strong>no typed chat</strong>: friends can only send each other a few fixed phrases, such as GOOD GAME!. On Android, the game can tell you when a friend comes online.</li>
     <li>On Android there are <strong>ads, but only videos you choose to watch</strong> for a reward, from <strong>Google AdMob</strong>. <strong>Under 18 they are never personalised</strong>, and under 13 they are children's ads only. Only a player who says they are 18 or older can get personalised ads, and in Europe only if they agree. There are no ads on iPhone. <a href="#ads">How the ads work</a>.</li>
-    <li>Nothing you do here is sold, shared for marketing, or used to follow you around other apps.</li>
-    <li>You can <strong>delete your account</strong> and everything our servers hold about it: in the game (Settings &rarr; YOUR ACCOUNT &rarr; DELETE ACCOUNT), or on <a href="delete.html">this page</a> if you no longer have the game. It happens 7 days after you ask, so it can be undone if you change your mind.</li>
+    <li>Nothing you do here is sold, and nothing is used to follow you around other apps. The one thing shared for marketing is a count on Android that the game was opened and the tutorial finished, so our own ads for Meowtropolis reach people who play (<a href="#first-open">explained here</a>); it carries no advertising ID and is never used to choose the ads anyone sees.</li>
+    <li>You can <strong>delete your account</strong> and everything our servers hold about it: in the game (Settings &rarr; DELETE ACCOUNT, the red button on the bottom row), or on <a href="delete.html">this page</a> if you no longer have the game. It happens 7 days after you ask, so it can be undone if you change your mind.</li>
   </ul>
 </div>
 
@@ -240,8 +240,8 @@
     <li><strong>No location.</strong> The game has no permission to know where you are and never asks for it. It does read which <strong>country</strong> your phone is set to and its <strong>time-zone</strong> setting; <a href="#timezone">here is why</a>.</li>
     <li><strong>No contacts, photos, camera, microphone or files.</strong> Your friends in the game are people you added inside the game, not your phone's contacts.</li>
     <li><strong>No personalised ads for anyone under 18, and no tracking companies.</strong> The only ads are the reward videos from Google AdMob that you choose to watch. Every request for a player under 13 is marked as coming from a child, and every request for a player under 18 is marked as under the age of consent, with personalisation off. There is no attribution service in the game. The one outside analytics service is <a href="#first-open">Google Analytics for Firebase</a>, on Android, which counts that the game was opened, that the tutorial was finished and that the first match after it started, and never reads the advertising ID. Unity's own hardware statistics and engine diagnostics are switched off.</li>
-    <li><strong>No typed chat.</strong> Players cannot write text to each other. Friends can send one of eight fixed phrases, and nothing else.</li>
-    <li><strong>No card numbers or payment details.</strong> If you buy coins, Google handles the payment. The game never sees the card.</li>
+    <li><strong>No typed chat.</strong> Players cannot write text to each other. Friends can send one of twelve fixed phrases, and nothing else.</li>
+    <li><strong>No card numbers or payment details.</strong> If you buy fish, Google handles the payment. The game never sees the card.</li>
     <li><strong>No birthday.</strong> The game asks how old you are once, and uses the answer only to decide how your name is shown to other players and which kind of ads you can be shown (see <a href="#age">your age</a>).</li>
   </ul>
 </div>
@@ -256,8 +256,9 @@
 </p>
 <p>
   It is a fresh random number, not anything taken from your phone. Nobody can work backwards from it
-  to a person, a device or an account. Deleting the game deletes the save file, and the link is
-  genuinely broken &mdash; a new install starts again as somebody new.
+  to a person, a device or an account. Deleting the game deletes the save file, so a new install gets a
+  new player number; if the game can sign you back in (Google Play Games on Android), your account and
+  progress come back with it.
 </p>
 <p class="note">
   One exception, and it is your choice: if you use the feature that links two of your own phones,
@@ -520,8 +521,9 @@
 
 <h3>Messages between friends</h3>
 <p>
-  <strong>There is no typed chat.</strong> Friends can send each other one of eight fixed phrases
-  &mdash; LET'S PLAY!, GOOD GAME!, ONE MORE?, WAIT FOR ME, NICE!, SORRY!, THANKS! and BRB &mdash;
+  <strong>There is no typed chat.</strong> Friends can send each other one of twelve fixed phrases
+  &mdash; HI!, HOW ARE YOU?, LET'S PLAY!, GOOD GAME!, ONE MORE?, WAIT FOR ME, NICE!, SORRY!, THANKS!, OK!,
+  NOT NOW and BRB &mdash;
   and invitations to play together. Only the number of the phrase travels, never words, so nothing
   else can appear on anybody's screen. Only friends can send them.
 </p>
@@ -662,8 +664,8 @@
 <h2>Signing in with Google Play Games</h2>
 <p>
   On Android, the game quietly asks Google Play Games who you are when it starts. This exists so that
-  the things you own &mdash; especially coins you paid for &mdash; can survive a new phone instead of
-  living only on this one.
+  the things you own &mdash; especially fish you paid for &mdash; can survive a new phone instead of
+  living only on this one, on phones where Play Games sign-in works.
 </p>
 <p>
   Google gives the game a short one-time code, which the game passes straight to Unity so Unity can
@@ -676,9 +678,10 @@
   on a new phone.
 </p>
 
-<h2>Buying coins</h2>
+<h2>Buying fish</h2>
 <p>
-  Coins can be earned by playing, and they can also be bought with real money. Buying is handled
+  Coins are earned by playing. Fish (and some packs that come with a cat) can be bought with real
+  money. Buying is handled
   entirely by <strong>Google Play</strong>. The game never sees your card, your billing address or any
   payment detail &mdash; it only hears back from Google whether the purchase succeeded.
 </p>
@@ -709,9 +712,8 @@
   above: which pack, what it gave you, and your new balance. No price and no payment details.
 </p>
 
-<h2>What stays on your phone and never leaves</h2>
+<h2>What is kept only on your phone</h2>
 <ul>
-  <li>Your progress: coins, the cats and skills you own, your records, your rank, your settings.</li>
   <li>Your purchase receipts (each is also sent once to our server to be checked, as described
       above).</li>
   <li>Your &ldquo;played with you&rdquo; list, the friend requests you have sent, and the names of your
@@ -857,7 +859,9 @@
 <p>
   All of it is used only to run the game: to keep progress, run leaderboards and live matches, keep
   friends lists, stop cheating, and learn which parts of the game work. None of it is sold, and none
-  of it is used for advertising.
+  of it is used to choose the ads a child sees. (The one count shared with Google on Android, that the game
+  was opened and the tutorial finished, helps our own ads for Meowtropolis reach players; it is the same
+  for every age and carries no advertising ID.)
 </p>
 
 <h3>Ads</h3>
@@ -879,7 +883,7 @@
       13 is shown to everyone else under a nickname the game makes up; only friends they have accepted
       see the name they chose.</li>
   <li><strong>There is no typed chat.</strong> Players cannot send each other any text they wrote,
-      ever. Friends can send only eight fixed phrases, such as GOOD GAME!.</li>
+      ever. Friends can send only twelve fixed phrases, such as HI! and GOOD GAME!.</li>
   <li><strong>Only friends can reach you, and only after you accept them.</strong> Someone you played
       with can send a friend request; it does nothing unless it is accepted. Friends can see when you
       are online and invite you to play. You can block anyone.</li>
@@ -913,8 +917,8 @@
 
 <h2 id="delete">How to delete your account and your data</h2>
 <p>
-  <strong>In the game:</strong> Settings &rarr; <strong>YOUR ACCOUNT</strong> &rarr;
-  <strong>DELETE ACCOUNT</strong>, then hold the red button. Your account is deleted
+  <strong>In the game:</strong> Settings &rarr; <strong>DELETE ACCOUNT</strong> (the red button on the
+  bottom row), then hold the red button. Your account is deleted
   <strong>7 days later</strong>. Until then the game shows a notice each time it opens, with a button
   to keep your account, in case you change your mind or someone else pressed it; the same notice has
   DELETE NOW if you do not want to wait.
@@ -928,13 +932,13 @@
   Friends, your friend code.
 </p>
 <p>
-  Deleting your account removes: your progress and coins (including bought coins) on the phone and in
+  Deleting your account removes: your progress, coins and fish (including bought fish) on the phone and in
   the cloud copy of your save; your leaderboard rows, your duel row, your stored match recordings and
   your claimed name; your usage records; your friend-alert record, your friend code and your player
   card; the server's count of your coins and what you own, with its refund notes; your invite records;
   the gift codes you used; the under-13 mark; your reward-video confirmations; the summary of your usage,
   your loading notes and your &ldquo;playing now&rdquo; row; your friends list, friend requests and
-  blocks; and your game account with Unity. Coins are not refunded.
+  blocks; and your game account with Unity. Coins and fish are not refunded.
 </p>
 <p>
   If you delete your account in the game, all of this goes at once when the 7 days are up (or when you
