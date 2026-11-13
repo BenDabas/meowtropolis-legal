@@ -827,9 +827,10 @@ Checked TRUE and unchanged: no player id is ever returned by a board or run rout
 
 **Terms of Use (terms.html, new).** Written after reading Supercell's, Rovio's, SYBO's and Miniclip's terms and two
 small developers' (Pixelbuf, Nitrome), for proportion. Deliberately left out as overreach or void against consumers
-in the EU, UK and Israel: arbitration, class-action waivers, exclusive Israeli courts (Facebook v. Ben Hamu, 2018),
-total liability exclusion, "no refunds ever". Cap: the higher of 12 months' payments or US$50, with the carve-outs
-the law requires. Apple's standard EULA kept rather than a custom one.
+in the EU and the UK: arbitration, class-action waivers, exclusive courts, total liability exclusion, "no refunds
+ever". Cap: the higher of 12 months' in-game payments or US$50, with the carve-outs the law requires. Apple's
+standard EULA kept rather than a custom one. No country of residence and no chosen law named (Ben, 2026-11-13: keep
+the developer's country out wherever it is not required); a consumer's home protections and courts are stated.
 
 **Not done, and needed before Europe/UK go live (none applies to the Philippines-only release):** the EU online
 withdrawal function (Directive 2023/2673, from 19 June 2026) if the game ever sells outside the stores' checkout;
