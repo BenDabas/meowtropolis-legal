@@ -780,3 +780,60 @@ arrived (test ids only, docs/ADS.md 12.5).
 2026-10-13 with ten data types and the ads declaration set to Yes (saved, not submitted: Play will not
 submit it until the target-audience form is finished). Before submitting, check it declares "Device or
 other IDs" for the app set ID used by Google's ad library.
+
+## 15. The 13 November 2026 re-check: what the policy had fallen behind on, and the Terms of Use
+
+Audited against Meowtropolis main at b278f7e84: 33 server routes (14 scores, 19 push), 4 scheduled jobs, the 16
+analytics events the scores server accepts, the 14 ctx fields, the 2 Firebase events. Control: the searches found the
+match upload (`POST /runs`, Server/handler.js), the deletion routes (server-push/account.js) and Firebase's `logEvent`
+(MeowPush.java). Each correction below and where it comes from:
+
+- **Deletion left the stats behind.** `eraseScores` deleted `meowtropolis_events` only; the per-install rollup
+  `meowtropolis_stats_players/{id}` (and tombstones `mergedInto` it, and same-`acct` siblings),
+  `meowtropolis_stats_accts/a_<ugs>`, `meowtropolis_boots/{id}` and `meowtropolis_live/{id}` stayed. Fixed in
+  server-push/account-store.js `eraseScores(player, ugs)` (statsPlayers, statsAcct, boot, live), tests in
+  test-account.js. The site totals (`meowtropolis_stats/agg_*`, summaries) carry no ids and stay; the boots cache's
+  `gotIds` is rebuilt from boot rows each refresh (Server/boots.js 137).
+- **"The usage records cannot be read over the internet" was false.** Server/firestore.rules lets the owner's Google
+  account read `meowtropolis_stats_players` and `meowtropolis_live`; the stats site reads them (Stats/firebase.js).
+  Now: read only by Ben on a private page that opens only for his account.
+- **Launch ping** (BootPing.cs, Server/boots.js, 2026-11-10): sent every launch, before the age question; install id,
+  country, language, model, GPU, RAM, tz, installer, load timings. Kept in `meowtropolis_boots`. Now in "When the game
+  starts loading".
+- **Playing-now list** (Server/live.js, firestore-store.js `putLive`): one row per player with player id, acct, cc,
+  lang, dev, v, screen/match, level, the public name (a child's generated one) and the child mark; Firestore TTL on
+  `expireAt`, LIVE_KEEP_MS 3 days. Now in "Who is playing right now".
+- **Under-13 mark on the server** (`meowtropolis_children`, POST /age) and the child card fields `k`/`a`
+  (server-push/handler.js 127-130, 338). Now stated under "Your age" and the player card.
+- **Refunds** (server-push/refunds.js, wallet.js `clawbackPurchase`, 2026-11-10): daily voided-purchases read, fish
+  taken back below zero, starter cat removed, refund note on the wallet. Now under "Buying coins".
+- **Gift codes** (server-push/gift-codes.js): typed code sent; `gift_redeemed/{ugs}_{CODE}`, `gift_tries/{ugs}`;
+  erased by `erasePush` `gifts`. Now under "Your coins and what you own".
+- **Two-group tests** (`ab` ctx field, Server/handler.js CTX_FIELDS; server-push/game-switches.js `switchesFor`): the
+  group is a hash of the player id. Now under "How the game is used".
+- **match_health is sent for solo matches too** since 2026-10-22 (MatchHealth.cs 149-150): the table row now says any
+  match. **ctx carries `gpu` and `gfx`**: now listed.
+- **Purchase rows hold `uid` and `playerId`** until deletion (test-account.js purchases test): now stated.
+- **Retention**: "no automatic deletion schedule" was wrong (1-, 3-, 30-, 60-day expiries exist); rewritten.
+- **The web form's optional email** (server-push/account.js `contact`) is kept with the request and deleted with it.
+- **iPhone update check** (UpdateGate.cs 350, itunes.apple.com/lookup by bundle id): Apple named as a third party.
+- **New section "Why each thing is used, and your rights"**: legal bases (contract / legitimate interest / consent),
+  rights, one-month answer, complaint to a local authority (Philippines: National Privacy Commission), transfers.
+
+Checked TRUE and unchanged: no player id is ever returned by a board or run route; Firebase gets only
+`tutorial_complete` and `first_play`, no parameters; Unity analytics, crash and performance reporting off
+(`submitAnalytics: 0`); no IP stored by our code; no location, device ID or advertising ID read by our code; the
+13-17 and 18+ bands never reach our servers.
+
+**Terms of Use (terms.html, new).** Written after reading Supercell's, Rovio's, SYBO's and Miniclip's terms and two
+small developers' (Pixelbuf, Nitrome), for proportion. Deliberately left out as overreach or void against consumers
+in the EU, UK and Israel: arbitration, class-action waivers, exclusive Israeli courts (Facebook v. Ben Hamu, 2018),
+total liability exclusion, "no refunds ever". Cap: the higher of 12 months' payments or US$50, with the carve-outs
+the law requires. Apple's standard EULA kept rather than a custom one.
+
+**Not done, and needed before Europe/UK go live (none applies to the Philippines-only release):** the EU online
+withdrawal function (Directive 2023/2673, from 19 June 2026) if the game ever sells outside the stores' checkout;
+an EU/UK representative (GDPR Art. 27); consent before analytics in the EEA/UK (ePrivacy); a pass against the UK
+Children's Code; Play trader status. **Philippines, to watch:** age is "sensitive personal information" (RA 10173
+s.3(l)); registration with the NPC applies once sensitive data of 1,000+ people is processed (Circular 2022-04, read
+from secondary summaries only), so count the Philippine players with an age answer before that.

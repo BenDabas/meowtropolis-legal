@@ -204,7 +204,7 @@
 <header>
   <p class="kicker">Meowtropolis</p>
   <h1>Privacy Policy</h1>
-  <p class="dateline">In effect from version 0.3.47 (counting who opens the game, Android); before that, 28 October 2026 and 13 October 2026</p>
+  <p class="dateline">Last updated 13 November 2026. Earlier versions: 0.3.47 (counting who opens the game, Android), 28 October 2026 and 13 October 2026. See also the <a href="terms.html">Terms of Use</a>.</p>
 </header>
 
 <div class="summary">
@@ -226,7 +226,8 @@
 <p>
   Meowtropolis is made by one person, Ben Dabas. The whole game, the leaderboard and the small
   servers behind it are his. There is no company, no marketing team, and nobody else with access.
-  You can always reach him at
+  In data-protection terms, Ben is the &ldquo;controller&rdquo;: the person who decides what is collected
+  and answers for it. You can always reach him at
   <a href="mailto:bendabas1@gmail.com">bendabas1@gmail.com</a>.
 </p>
 
@@ -282,6 +283,11 @@
   &mdash; children's ads under 13, ordinary ads without personalisation from 13 to 17, and possibly
   personalised ads from 18 (see <a href="#ads">Ads</a>). The game keeps only which of those groups you
   are in, not the age itself.
+</p>
+<p>
+  For a player under 13, our server also keeps a mark that says only &ldquo;under 13&rdquo; (no age),
+  so that the made-up nickname is used everywhere other players can see you, even if you reinstall the
+  game. The mark goes when you delete your account. The two older groups are never sent to our servers.
 </p>
 
 <h3>Your cat name</h3>
@@ -353,12 +359,19 @@
   no free text of any kind in them.
 </p>
 <p>
+  Sometimes two versions of one part of the game are tried side by side, to learn which works better
+  &mdash; for example, how much help a new player gets in their first matches. Which version you get is
+  picked from your player number, and the usage records say which one it was, so the two can be
+  compared. Nothing else about you is used to choose.
+</p>
+<p>
   Each batch of records also describes the copy of the game that sent it: the game's version, Android
   or iPhone, whether it was installed from Google Play, the <strong>country the phone is set to</strong>
   (taken from the SIM card, the mobile network or the phone's language setting &mdash; never a
-  position), the phone's language, its model name, how much memory it has, how many hours ahead of or
-  behind UTC it is, and when the game was first opened on it. This is so the numbers from real
-  players can be told apart from our own test phones, and read by country and by kind of phone.
+  position), the phone's language, its model name, its graphics chip and the graphics system it uses,
+  how much memory it has, how many hours ahead of or behind UTC it is, and when the game was first opened
+  on it. This is so the numbers from real players can be told apart from our own test phones, and read by
+  country and by kind of phone.
 </p>
 <p>The records themselves are:</p>
 <div class="table-scroll">
@@ -381,7 +394,7 @@
     <tr><td>You go up a level</td><td>your new level</td></tr>
     <tr><td>You buy with real money</td><td>which pack it was and what it gave you &mdash; never a receipt or a payment detail</td></tr>
     <tr><td>The game asks for a store review, or offers an update</td><td>that it asked or offered, and what happened</td></tr>
-    <tr><td>An online match ends</td><td>what kind of phone it ran on (the model name, the system version including the phone maker's build number, the graphics chip, the amount of memory and the number of processor cores), how smoothly the match ran and how steady the connection was. Only for online matches that lasted at least a few seconds</td></tr>
+    <tr><td>Any match ends (online or not)</td><td>what kind of phone it ran on (the model name, the system version including the phone maker's build number, the graphics chip, the amount of memory and the number of processor cores), how smoothly the match ran and, for an online match, how steady the connection was. Only for matches that lasted at least a few seconds</td></tr>
   </tbody>
 </table>
 </div>
@@ -393,6 +406,26 @@
   the same update; it does not identify your phone.
 </p>
 
+<h3 id="launch">When the game starts loading</h3>
+<p>
+  Every time the game starts, before the first screen and before the age question, it sends our server
+  one short note, so we can see whether phones get through the first load or give up during it. The note
+  carries a random number for this copy of the game (the same one that later becomes your player number),
+  the country and language the phone is set to, its model name, graphics chip and memory, its time-zone
+  offset, whether it was installed from Google Play, and how long each part of the load took. It
+  contains nothing you typed and no device ID. It is kept until you delete your account.
+</p>
+
+<h3 id="now">Who is playing right now</h3>
+<p>
+  So Ben can see the game is working for the people in it, the server keeps one short &ldquo;playing
+  now&rdquo; row per player: your player number and Unity account number, the country and language the
+  phone is set to, its model name, the game's version, which screen or kind of match you are in, your
+  level, and the cat name other players see (for a player under 13, the made-up nickname, with the mark
+  that the player is under 13). Only Ben sees this list. Each row <strong>deletes itself 3 days</strong>
+  after the game last sent anything.
+</p>
+
 <h3>Your coins and what you own</h3>
 <p>
   So that coins cannot simply be made up by a changed copy of the game, <strong>our server keeps the
@@ -401,6 +434,12 @@
   account number (see <a href="#live">below</a>), together with your player number, a random number for
   each phone you play on, and the times of your recent matches, so it can check that the numbers are
   possible. The count on your phone is a copy of the server's.
+</p>
+<p>
+  <strong>Gift codes.</strong> If you type a gift code (Settings &rarr; GIFT CODE), the code is sent to
+  our server, which checks it and pays the gift. The server keeps which codes you used and when, so each
+  code is paid once, and counts your tries for an hour, so codes cannot be guessed. Both go when you
+  delete your account.
 </p>
 
 <h2 id="live">Playing live against other people</h2>
@@ -427,8 +466,9 @@
   To find players who are near you first, a waiting room shows other phones looking for a match how
   many hours ahead of or behind UTC the phone that opened it is &mdash; for example, &ldquo;three hours
   ahead&rdquo;. That is the time-zone setting on the phone, never your position. The country the
-  phone is set to is used only in the usage records described <a href="#usage">above</a>, so the
-  numbers can be read country by country; it is never shown to other players.
+  phone is set to is used only in the usage records, loading notes and &ldquo;playing now&rdquo; list
+  described <a href="#usage">above</a>, so the numbers can be read country by country; it is never shown
+  to other players.
 </p>
 <p>
   After a live match, each player's game keeps a short <strong>&ldquo;played with you&rdquo;</strong>
@@ -457,7 +497,8 @@
       game can only look up a limited number of codes an hour, so codes cannot be guessed in bulk.</li>
   <li><strong>When you send someone a friend request, they see your cat name, your cat and your
       level</strong> on it, so they know who is asking. For that, our server keeps a small &ldquo;player
-      card&rdquo; with just those three things. Only your friends and players you have sent a request to
+      card&rdquo; with just those three things (for a player under 13, also the made-up nickname and the
+      mark that the player is under 13, so that a player who is not yet a friend sees only the nickname). Only your friends and players you have sent a request to
       can read it &mdash; our server asks Unity who they are each time &mdash; and nobody else can look it
       up. Your friends' phones may also use it to show your name while you are offline.</li>
   <li><strong>Invited by a friend.</strong> If you came to the game through a friend's link or typed a
@@ -649,8 +690,19 @@
   that one purchase can never be paid out twice. It never holds a card, a name or any payment detail.
 </p>
 <p>
+  The record also says whose purchase it was (your Unity account number and player number), so the
+  right account is paid; those two go when you delete your account.
+</p>
+<p>
   So that a purchase can be recognised as yours if you change phone, the game gives Google a
   scrambled, one-way version of your player number. It cannot be turned back into anything.
+</p>
+<p>
+  <strong>Refunds.</strong> Once a day our server asks Google Play which purchases were refunded. If one
+  of yours was, the server takes back what that purchase gave (the fish, even if that leaves you below
+  zero, and a cat that came with it), marks the purchase record as refunded, and keeps a short note of it
+  with your coins (which pack, the order number, when, and what was taken back) until you delete your
+  account.
 </p>
 <p>
   Apart from that check, what leaves your phone about a purchase is the line in the usage records
@@ -684,8 +736,9 @@
 <ul>
   <li><strong>Only Ben can read them</strong>, through his own Google account. No other app and no other
       person has access to the databases, and the game itself has no key to them.</li>
-  <li>The usage records cannot be read over the internet at all. There is deliberately no way to
-      request them; that ability was never built.</li>
+  <li>The usage records, the loading notes and the &ldquo;playing now&rdquo; list are read only by Ben,
+      on a private statistics page that opens only for his own Google account. Neither the game nor any
+      other person can read them.</li>
   <li>Leaderboard rows are meant to be seen: names, cats and scores are shown to other players inside
       the game. Player numbers are never shown to anyone.</li>
   <li>Nothing is sold. Our servers give nothing to advertisers, data brokers or anybody else. (What
@@ -700,6 +753,8 @@
   messages between friends). You can read
   <a href="https://policies.google.com/privacy">Google's privacy policy</a> and
   <a href="https://unity.com/legal/game-player-and-app-user-privacy-policy">Unity's player privacy policy</a>.
+  On iPhone, the game also asks <strong>Apple</strong>'s App Store which version of the game is the
+  newest, so it can offer an update; nothing about you is in that question.
   As with any internet connection, their systems see your device's internet address when your phone
   talks to them; the game itself does not record or keep it. The Unity engine's own hardware statistics
   and engine diagnostics are switched off, so the engine does not report on your phone to Unity by
@@ -708,15 +763,19 @@
 
 <h2>How long it is kept</h2>
 <p>
-  Being honest about this: <strong>the game has no automatic deletion schedule.</strong> Nothing is
-  set up to erase data after a certain number of days. What actually happens is:
+  Some things delete themselves after a set time; the rest stays while the game is running, until you
+  delete your account. Exactly:
 </p>
 <ul>
   <li>Only your <strong>five most recent match recordings</strong> are kept. A sixth match overwrites
       the oldest one.</li>
   <li>Your leaderboard row and your duel row are single rows that are rewritten each time you play,
       not a history.</li>
-  <li>The usage records build up, and stay until they are deleted by hand.</li>
+  <li>The usage records, the summary of them per player and the loading notes stay while the game is
+      running, so it can be compared over time, and go when you delete your account. The site's totals
+      (counts with no player in them) stay.</li>
+  <li>The &ldquo;playing now&rdquo; row <strong>deletes itself 3 days</strong> after the game last sent
+      anything.</li>
   <li>The friend-alert record is <strong>deleted when you switch ALERTS off</strong>, and
       <strong>automatically when the game has not been open for 60 days</strong>. It keeps at most three
       notification addresses; an address that Google reports as no longer working is removed. The record
@@ -726,8 +785,8 @@
   <li>Your player card (cat name, cat, level) is refreshed each time you open the game and
       <strong>deleted automatically when the game has not been open for 30 days</strong>, or when you
       delete your account.</li>
-  <li>Your coins and what you own, and the record of a friend's invite, stay until you delete your
-      account.</li>
+  <li>Your coins and what you own, refund notes, the gift codes you used, the under-13 mark and the
+      record of a friend's invite stay until you delete your account.</li>
   <li>The confirmation that a reward video was watched is <strong>deleted after 30 days</strong>, or
       when you delete your account.</li>
   <li>The record of each real-money purchase (a scrambled purchase token, the pack, the order number and
@@ -738,11 +797,45 @@
   <li>What Google's ad library sends Google is kept by Google, under Google's own policies.</li>
   <li><strong>When you delete your account</strong>, all of the above is deleted 7 days after you
       ask (see <a href="#delete">below</a>). A request to delete from the web page that does not match
-      any account is kept for up to 30 days so we can answer it, then deleted.</li>
+      any account is kept for up to 30 days so we can answer it, then deleted. If you gave an email
+      address on that page, it is kept with the request and deleted with it.</li>
 </ul>
 <p>
   So: your data stays until you delete your account, or until it is cleared out as described above.
   If that changes, this page will say so.
+</p>
+
+<h2 id="why">Why each thing is used, and your rights</h2>
+<p>
+  Privacy laws such as Europe's GDPR and the Philippines' Data Privacy Act ask every game to say why it
+  may use each piece of data. Ours:
+</p>
+<ul>
+  <li><strong>To give you the game you asked for:</strong> your save, coins and what you own, the
+      leaderboards and recordings, live matches, friends, friend alerts you switched on, gift codes,
+      purchases and refunds.</li>
+  <li><strong>Because it is needed to keep the game working and fair</strong> (what the law calls a
+      legitimate interest): the usage records, the loading notes, the &ldquo;playing now&rdquo; list,
+      the checks against cheating, and trying two versions of a feature. None of it is used for
+      advertising, and you can stop it by deleting your account.</li>
+  <li><strong>Only with your agreement:</strong> personalised ads (18 and over, and in Europe only after
+      Google's consent message) and notifications (your phone asks you first). You can change either at
+      any time: PRIVACY &amp; ADS in Settings or your phone's ad settings, and ALERTS on the friends screen
+      or your phone's notification settings.</li>
+</ul>
+<p>
+  <strong>Your rights.</strong> You can ask to see what our servers hold about you, to have something
+  corrected (you can change your cat name yourself), to have it all deleted, to get a copy of it, or to
+  object to or limit how it is used. Write to
+  <a href="mailto:bendabas1@gmail.com">bendabas1@gmail.com</a> with your cat name and friend code, or use
+  DELETE ACCOUNT. You will get an answer within one month. If you think your data was handled wrongly,
+  you can also complain to the data-protection authority where you live (for example, in the Philippines,
+  the National Privacy Commission).
+</p>
+<p>
+  <strong>Where it goes.</strong> Our own databases are in Europe. Google and Unity may handle the parts
+  they run in other countries, including the United States, under the safeguards described in their own
+  privacy policies.
 </p>
 
 <h2 id="children">Children, and a note for parents</h2>
@@ -755,8 +848,9 @@
 <p>
   The same as from any other player, as described on this page, and nothing more: the random player
   number and the Unity account number; the age answer; a cat name; the results of matches; your
-  child's coins and what they own; the usage records (which include the country the phone is set to
-  and the kind of phone); and, only if they are used, friends, friend alerts, invites and purchases.
+  child's coins and what they own; the usage records, loading notes and &ldquo;playing now&rdquo; row
+  (which include the country the phone is set to and the kind of phone); and, only if they are used,
+  friends, friend alerts, invites, gift codes and purchases.
   The game never asks a child for a real name, an email address, a phone number, a photo, their voice
   or their location, and there is no way to type a message to another player.
 </p>
@@ -790,7 +884,7 @@
       with can send a friend request; it does nothing unless it is accepted. Friends can see when you
       are online and invite you to play. You can block anyone.</li>
   <li><strong>Nothing personal is asked for.</strong> No name, no email, no location &mdash; only how
-      old the player is, to decide how their name is shown.</li>
+      old the player is, to decide how their name is shown and which ads can be shown.</li>
   <li>Names are filtered for rude and hateful words before they can appear on anybody else's screen.</li>
   <li>Friend links and shared friend codes never contain the child's cat name.</li>
   <li>Friend alerts are never sent between 10 at night and 8 in the morning, and they can be switched
@@ -837,9 +931,10 @@
   Deleting your account removes: your progress and coins (including bought coins) on the phone and in
   the cloud copy of your save; your leaderboard rows, your duel row, your stored match recordings and
   your claimed name; your usage records; your friend-alert record, your friend code and your player
-  card; the server's count of your coins and what you own; your invite records; your reward-video
-  confirmations; your friends list, friend requests and blocks; and your game account with Unity. Coins
-  are not refunded.
+  card; the server's count of your coins and what you own, with its refund notes; your invite records;
+  the gift codes you used; the under-13 mark; your reward-video confirmations; the summary of your usage,
+  your loading notes and your &ldquo;playing now&rdquo; row; your friends list, friend requests and
+  blocks; and your game account with Unity. Coins are not refunded.
 </p>
 <p>
   If you delete your account in the game, all of this goes at once when the 7 days are up (or when you
@@ -884,7 +979,7 @@
 
 <footer>
   Meowtropolis &mdash; privacy policy. Written to describe what the game actually does, not what is
-  usual to say.
+  usual to say. &middot; <a href="terms.html">Terms of Use</a>
 </footer>
 
 </div>

@@ -2,8 +2,9 @@
 
 The public web pages for **Meowtropolis**, a mobile game by Ben Dabas.
 
-Right now that is one page: the privacy policy, served at
-<https://bendabas.github.io/meowtropolis-legal/>. Google Play requires a
+The privacy policy, served at <https://bendabas.github.io/meowtropolis-legal/>,
+the terms of use at <https://bendabas.github.io/meowtropolis-legal/terms.html>, and
+the account deletion page (`delete.html`). Google Play requires a
 publicly reachable privacy policy URL before a game can be released, and this
 repository exists so that URL can be public without the game's own source
 being public.
