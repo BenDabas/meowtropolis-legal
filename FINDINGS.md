@@ -152,14 +152,15 @@ bounded at 500 held events. Batch body is
 
 | Event | Fields |
 |---|---|
-| app_open | app version, matches played so far, coin balance |
+| app_open | app version, matches played so far, coin balance; from 0.3.48 on Android `notif` (1/0: whether the phone allows the game's notifications) |
 | match_start | arena, cat, equipped skills and their levels, mode (online/bots), matches played |
 | match_end | arena, cat, skills, mode, mass, tier, place, rivals, kills, coins earned, stars, duration in whole seconds, end reason, matches played, coin balance |
 | match_quit | arena, cat, mode, mass, tier, duration |
 | purchase | kind (cat, skill, level, coinpack), item id, price in coins, resulting balance, amount |
 | claim | kind (gift, mission, achievement), id, amount, resulting balance |
 | tutorial | which step was completed |
-| notification_open | which reminder was tapped: the deep-link slug the notification carried, as `target` (GameUi.cs). Refused by the server until 2026-09-25, stored since |
+| notification_open | which reminder was tapped: the deep-link slug the notification carried, as `target` (GameUi.cs), and from 0.3.48 its slot as `id` (tonight, tomorrow, day-two, cup, lapse-3/7/14/30) (GameNotifications.UnpackIntent). Refused by the server until 2026-09-25, stored since |
+| notif_ask (from 0.3.48; server accepts it from 2026-11-15) | asking about reminders (Analytics.NotificationAsk): `kind` = card_shown, card_yes, card_later (the game's own card), system_allowed, system_denied, system_skipped (the phone's dialog), settings_open (the card's OPEN SETTINGS once Android stopped asking); `id` = which ask: home, gift, friends, card, card2 (Android's second and last showing), again, settings. No free text, no token, nothing about another player. Same event documents and stats rollup (`nt`) that DELETE ACCOUNT already erases. Covered by "How the game is used" (new row) |
 | match_health (sent since 2026-09-20, **stored since 2026-09-25**) | ONLINE-mode matches only, of 5 s and 30 frames or more (MatchHealth.cs): arena, live or bots, **device model, OS version string, GPU name, RAM in MB, CPU core count** (SystemInfo.deviceModel, operatingSystem, graphicsDeviceName, systemMemorySize, processorCount), frame-rate median and 5th percentile (overall and while refereeing), network silences (count, worst, total), reconnects, refereeing time, whether the referee changed, snapshot counts and timing, stranded/alone/reached the whistle, seats, queue window, wire version, duration |
 | item (sent since 2026-09-05, **stored since 2026-09-25**) | which belt item was used in a match (`id`) and on which leg of the run (`leg`) (MatchController.cs:290, Prowl.Leg) |
 | friend (from 0.3.48; server accepts it since 2026-11-14) | the friends feature, as counts only (Analytics.Friend, FriendsUgs.cs): `kind` = request (to a real player), bot_request, made (this phone accepted a request), share (the invite went to the share sheet), copy (the friend code was copied), count (how many friends the player has, in `amount`, sent when it changes and once a day); `screen` = where a request or share came from, a fixed slug (code, link, match, accept / friends, results). **No other player's id, name or friend code, and not the player's own code.** Folded into the player's stats rollup (`fr`), so DELETE ACCOUNT's stats erase already removes it. Covered by the policy's "How the game is used" (what happens in the game, no free text); no policy change needed |
